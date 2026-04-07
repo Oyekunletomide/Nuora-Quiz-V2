@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuora Smell Quiz - Discover Your Vaginal Health Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#FFFFFF;--white:#FFFFFF;--yellow-50:#FEFBE8;--yellow-25:#FEFDF0;--yellow-100:#FEF7C3;--yellow-200:#FDE272;--yellow-400:#FAC515;--yellow-500:#EAAA08;--yellow-600:#CA8504;--brown-800:#854A0E;--brown-900:#713B12;--brown-950:#542C0D;--rose:#9B083E;--rose-bg:#FDF0F4;--green:#276536;--green-bg:#F0FDF4;--border:rgba(113,59,18,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--brown-950);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Americana BT',Georgia,'Times New Roman',serif}
+.quiz-container{max-width:680px;margin:0 auto;padding:40px 20px}
+.quiz-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.back-btn{display:none;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;border:none;background:none;cursor:pointer;padding:0;border-radius:4px;-webkit-tap-highlight-color:transparent;transition:background-color .15s}
+.back-btn:active{background:var(--yellow-100)}
+.back-btn svg{color:var(--brown-800)}
+.progress-bar{flex:1;height:10px;background:var(--yellow-100);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:var(--yellow-400);width:0%;border-radius:4px;transition:width .5s ease}
+.quiz-step{display:none;animation:fadeInUp .4s ease;padding-top:20px}
+.quiz-step.active{display:block}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.question-title{font-size:32px;font-weight:700;color:var(--brown-900);margin-bottom:12px;line-height:1.2}
+.question-subtitle{font-size:15px;color:var(--brown-800);margin-bottom:24px}
+.section-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-800);margin-bottom:8px;opacity:.7}
+.options-container{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.option-btn{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:20px 24px;font-family:'Montserrat',sans-serif;font-size:16px;color:var(--brown-900);text-align:left;cursor:pointer;transition:all .2s;font-weight:500;display:flex;align-items:center;gap:14px}
+.option-btn:hover{border-color:var(--yellow-400);background:var(--yellow-50)}
+.option-btn.selected{background:var(--yellow-50);border-color:var(--yellow-400);color:var(--brown-950)}
+.single-select .option-btn::before{content:'';width:22px;height:22px;min-width:22px;border-radius:50%;border:2px solid var(--border);background:var(--white);transition:all .2s}
+.single-select .option-btn:hover::before{border-color:var(--yellow-400)}
+.single-select .option-btn.selected::before{border-color:var(--brown-950);background:var(--brown-950);box-shadow:inset 0 0 0 3px white}
+.multi-select .option-btn::before{content:'\2713';width:22px;height:22px;min-width:22px;border-radius:4px;border:2px solid var(--border);background:var(--white);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:transparent;transition:all .2s}
+.multi-select .option-btn:hover::before{border-color:var(--yellow-400)}
+.multi-select .option-btn.selected::before{border-color:var(--brown-950);background:var(--brown-950);color:var(--yellow-400)}
+.continue-btn{width:100%;background:var(--yellow-400);color:var(--brown-950);border:none;border-radius:4px;padding:18px 32px;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.continue-btn:hover:not(:disabled){background:var(--yellow-500);transform:translateY(-1px)}
+.continue-btn:disabled{opacity:.4;cursor:not-allowed}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;padding:16px 20px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--bg);z-index:100;border-top:1px solid var(--border);display:none}
+.bottom-bar .continue-btn{max-width:640px;margin:0 auto;display:block}
+.welcome-screen{text-align:center;padding:20px 0 40px}
+.welcome-screen h1{font-size:34px;color:var(--brown-900);line-height:1.25;margin-bottom:16px}
+.welcome-screen .subheadline{font-size:16px;color:var(--brown-800);margin-bottom:32px;line-height:1.7}
+.benefit-list{text-align:left;margin:0 auto 36px;max-width:520px}
+.benefit-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;font-size:15px;color:var(--brown-900);line-height:1.5}
+.benefit-check{width:22px;height:22px;min-width:22px;background:var(--yellow-400);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.benefit-check svg{width:14px;height:14px;color:var(--brown-950)}
+.start-btn{display:inline-block;background:var(--yellow-400);color:var(--brown-950);border:none;border-radius:4px;padding:20px 48px;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;width:100%;max-width:400px}
+.start-btn:hover{background:var(--yellow-500);transform:translateY(-1px)}
+.welcome-footer{font-size:13px;color:var(--brown-800);margin-top:12px;opacity:.7}
+.insight-screen{padding:24px 0 40px}
+.insight-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown-800);opacity:.7;margin-bottom:20px}
+.insight-stat-card{background:var(--yellow-100);border-radius:8px;padding:40px 24px;text-align:center;margin-bottom:24px}
+.insight-stat-number{font-size:72px;font-weight:900;color:var(--brown-900);line-height:1;font-family:'Montserrat',sans-serif}
+.insight-body{font-size:16px;color:var(--brown-800);line-height:1.7;margin-bottom:24px}
+.insight-callout{background:var(--yellow-100);border-left:4px solid var(--yellow-400);border-radius:4px;padding:16px 20px;margin-bottom:32px;font-size:14px;font-weight:600;color:var(--brown-900);line-height:1.6}
+.insight-continue-btn{width:100%;background:var(--yellow-400);color:var(--brown-950);border:none;border-radius:4px;padding:18px 32px;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.insight-continue-btn:hover{background:var(--yellow-500);transform:translateY(-1px)}
+.loading-screen{text-align:center;padding:60px 20px}
+.loading-title{font-size:28px;color:var(--brown-900);margin-bottom:40px}
+.loading-progress{margin-bottom:40px}
+.loading-progress-track{width:100%;height:28px;background:var(--yellow-100);border-radius:8px;overflow:hidden}
+.loading-progress-fill{height:100%;background:var(--yellow-400);border-radius:8px;width:0%;transition:width .8s ease;position:relative;overflow:hidden}
+.loading-progress-fill::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 1.8s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}100%{left:100%}}
+.loading-percent{display:block;margin-top:12px;font-size:16px;font-weight:700;color:var(--brown-800)}
+.loading-steps-list{text-align:left;max-width:380px;margin:0 auto}
+.loading-step-item{display:flex;align-items:center;gap:14px;padding:14px 0;font-size:15px;color:var(--brown-800);opacity:.4;transition:opacity .3s,color .3s}
+.loading-step-item.active{opacity:1;color:var(--brown-900);font-weight:500}
+.loading-step-item.complete{opacity:1;color:var(--brown-900)}
+.step-check{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .3s}
+.loading-step-item.active .step-check{border-color:var(--yellow-400);background:var(--yellow-100)}
+.loading-step-item.complete .step-check{border-color:var(--yellow-500);background:var(--yellow-400);color:var(--brown-950)}
+.loading-step-item.complete .step-check::after{content:'\2713';font-weight:700}
+
+/* ═══ PROFILE SUMMARY ═══ */
+.results-page{padding-bottom:60px}
+.profile-card{background:var(--yellow-50);border:1px solid var(--border);border-radius:8px;padding:32px 24px;margin-bottom:24px}
+.profile-card-title{font-size:28px;font-weight:700;color:var(--brown-900);text-align:center;margin-bottom:8px}
+.profile-card-sub{font-size:15px;color:var(--brown-800);text-align:center;margin-bottom:24px}
+.profile-meter{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:12px}
+.profile-meter-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.profile-meter-label{font-size:14px;font-weight:700;color:var(--brown-900);text-transform:uppercase;letter-spacing:.5px}
+.meter-badge{font-size:11px;font-weight:800;padding:4px 12px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.meter-badge.high{background:var(--rose-bg);color:var(--rose)}
+.meter-badge.elevated{background:var(--yellow-100);color:var(--yellow-600)}
+.meter-badge.normal{background:var(--green-bg);color:var(--green)}
+.gauge-track{position:relative;height:12px;border-radius:6px;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%);margin-bottom:8px}
+.gauge-thumb{position:absolute;top:50%;transform:translate(-50%,-50%);width:20px;height:20px;background:var(--white);border:3px solid var(--brown-900);border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.15);transition:left .8s ease}
+.gauge-labels{display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:var(--brown-800);text-transform:uppercase;letter-spacing:.3px;margin-bottom:10px}
+.meter-explain{font-size:13px;color:var(--brown-800);line-height:1.6}
+.flora-callout{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;display:flex;gap:14px;align-items:flex-start}
+.flora-icon{width:32px;height:32px;min-width:32px;background:var(--yellow-400);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--brown-950);margin-top:2px}
+.flora-callout-title{font-size:14px;font-weight:700;color:var(--brown-900);margin-bottom:4px}
+.flora-callout-text{font-size:13px;color:var(--brown-800);line-height:1.6}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.stat-box{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:14px 18px}
+.stat-box-label{font-size:11px;font-weight:700;color:var(--brown-800);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat-box-val{font-size:16px;font-weight:800;color:var(--brown-950)}
+
+/* ═══ EXTENDED SCREENS ═══ */
+.why-card{margin-top:16px;padding:16px 20px;background:var(--yellow-50);border:1px solid var(--border);border-radius:4px}
+.why-card h4{font-size:14px;font-weight:700;color:var(--yellow-600);margin-bottom:6px}
+.why-card p{font-size:13px;color:var(--brown-800);line-height:1.55}
+.ext-loading{text-align:center;padding:60px 20px}
+.ext-spinner{width:56px;height:56px;border:4px solid var(--yellow-100);border-top-color:var(--yellow-400);border-radius:50%;animation:spin .8s linear infinite;margin:24px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.build-steps{display:flex;flex-direction:column;align-items:center;gap:28px;margin-top:32px}
+.build-step{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.3;transition:opacity .5s}
+.build-step.active{opacity:1}
+.build-step.done{opacity:1}
+.build-step-icon{width:44px;height:44px;border-radius:50%;border:2px solid var(--yellow-400);display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--yellow-50)}
+.build-step.done .build-step-icon{background:var(--yellow-400);border-color:var(--yellow-500)}
+.build-step-text{font-size:14px;color:var(--brown-800);font-weight:500}
+.build-step.active .build-step-text{color:var(--brown-950);font-weight:600}
+.chart-wrap{background:var(--white);border-radius:8px;padding:24px;border:1px solid var(--border);margin:16px 0}
+.chart-wrap svg{width:100%;height:auto}
+.offer-box{text-align:center}
+.offer-box h2{font-size:26px;font-weight:700;color:var(--brown-950);line-height:1.3;margin-bottom:8px}
+.offer-sub{font-size:14px;color:var(--brown-800);margin-bottom:16px;line-height:1.5}
+.prod-card{background:var(--white);border-radius:8px;padding:28px 24px;border:1px solid var(--border);margin:20px 0;text-align:center}
+.prod-badge{font-size:12px;font-weight:700;color:var(--brown-950);background:var(--yellow-200);padding:6px 14px;border-radius:4px;display:inline-block;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.prod-benefits{display:flex;justify-content:center;gap:24px;margin:16px 0;flex-wrap:wrap}
+.prod-benefits .ben{text-align:center;font-size:12px;color:var(--brown-900);font-weight:600}
+.prod-benefits .ben .ico{font-size:24px;display:block;margin-bottom:4px}
+.btn-claim{width:100%;padding:20px 24px;background:var(--yellow-400);color:var(--brown-950);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;animation:subtlePulse 3s ease-in-out infinite}
+.btn-claim:hover{background:var(--yellow-500);transform:translateY(-2px);animation:none}
+@keyframes subtlePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+.guarantee{display:inline-flex;align-items:center;gap:8px;background:var(--yellow-50);border:1px solid var(--border);border-radius:4px;padding:10px 18px;font-size:14px;font-weight:600;color:var(--brown-900);margin-top:16px}
+.btn-ext{width:100%;padding:18px 24px;background:var(--yellow-400);color:var(--brown-950);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;margin-top:20px}
+.btn-ext:hover{background:var(--yellow-500);transform:translateY(-1px)}
+.btn-ext:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ext-multi .option-btn::before{content:'\2713';width:22px;height:22px;min-width:22px;border-radius:4px;border:2px solid var(--border);background:var(--white);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:transparent;transition:all .2s}
+.ext-multi .option-btn.selected::before{border-color:var(--brown-950);background:var(--brown-950);color:var(--yellow-400)}
+
+@media(max-width:768px){.quiz-container{padding:20px 16px}.question-title{font-size:26px}.option-btn{padding:16px 20px;font-size:15px}.welcome-screen h1{font-size:26px}.insight-stat-number{font-size:56px}.profile-card{padding:24px 16px}.profile-meter{padding:16px}}
+@media(max-width:480px){.question-title{font-size:22px}.option-btn{padding:18px 16px;font-size:14px;min-height:56px}.welcome-screen h1{font-size:23px}.insight-stat-number{font-size:48px}.stat-grid{grid-template-columns:1fr}.profile-card-title{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="quiz-container">
+    <div class="quiz-header">
+        <button class="back-btn" id="backBtn" aria-label="Go back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+    </div>
+
+    <!-- WELCOME SCREEN -->
+    <div class="quiz-step active" id="welcome">
+        <div class="welcome-screen">
+            <h1>Discover Your Vaginal Health Profile: Which Bacteria Type & Root Cause is Affecting You?</h1>
+            <p class="subheadline">Take this 90 second assessment to identify your specific odor type, bacterial age, biofilm status, and hormonal factors to get your personalized protocol.</p>
+            <div class="benefit-list">
+                <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span>Identify which of 3 bacteria types is causing your specific odor</span></div>
+                <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span>Discover your bacterial age vs chronological age</span></div>
+                <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span>Find out if biofilm is blocking your treatments</span></div>
+                <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span>Learn if low glycogen is preventing probiotics from working</span></div>
+            </div>
+            <button class="start-btn" id="startBtn">Start Assessment</button>
+            <p class="welcome-footer">Takes about 90 seconds. Your answers are private.</p>
+        </div>
+    </div>
+
+    <!-- Q1-Q11 + INSIGHTS + LOADING + RESULTS (original flow) -->
+    <div class="quiz-step" id="q1"><p class="section-label">Odor Type Identification</p><h1 class="question-title">Which description best matches your vaginal odor?</h1><div class="options-container single-select"><button class="option-btn" data-value="ammonia">Sharp, chemical smell (like bleach or ammonia)</button><button class="option-btn" data-value="fishy">Ocean-like, fishy smell</button><button class="option-btn" data-value="musty">Musty, damp smell (like old bathroom)</button><button class="option-btn" data-value="mixed">No consistent smell / varies</button></div></div>
+
+    <div class="quiz-step" id="q2"><p class="section-label">Odor Type Identification</p><h1 class="question-title">When is your odor most noticeable?</h1><div class="options-container single-select"><button class="option-btn" data-value="urination">Right after urination</button><button class="option-btn" data-value="sexual">After sexual activity</button><button class="option-btn" data-value="constant">Constant throughout the day</button><button class="option-btn" data-value="period">After my period</button></div></div>
+
+    <div class="quiz-step" id="insight1"><div class="insight-screen"><p class="insight-label">Your odor type is being analyzed...</p><div class="insight-stat-card"><p class="insight-stat-number" data-target="3" data-suffix="">0</p></div><p class="insight-body">There are <strong>3 distinct bacteria types</strong> that cause vaginal odor.</p><div class="insight-callout">97% of women we surveyed were using treatments designed for the wrong bacteria type.</div><button class="insight-continue-btn" onclick="navigateToStep('q3')">Continue</button></div></div>
+
+    <div class="quiz-step" id="q3"><p class="section-label">Biofilm Presence</p><h1 class="question-title">How long do treatments (probiotics, boric acid, etc.) provide relief?</h1><div class="options-container single-select"><button class="option-btn" data-value="2-5days">2-5 days, then smell returns</button><button class="option-btn" data-value="1week">1 week, then gradual return</button><button class="option-btn" data-value="none">No improvement at all</button><button class="option-btn" data-value="untried">Haven't tried treatments yet</button></div></div>
+
+    <div class="quiz-step" id="q4"><p class="section-label">Biofilm Presence</p><h1 class="question-title">How many different treatments have you tried?</h1><div class="options-container single-select"><button class="option-btn" data-value="3plus">3 or more with no lasting results</button><button class="option-btn" data-value="1-2">1-2 treatments</button><button class="option-btn" data-value="zero">None yet</button></div></div>
+
+    <div class="quiz-step" id="insight2"><div class="insight-screen"><p class="insight-label">Checking your biofilm status...</p><div class="insight-stat-card"><p class="insight-stat-number" data-target="1000" data-suffix="x">0</p></div><p class="insight-body">Biofilm makes bacteria up to <strong>1,000x more resistant</strong> to treatment.</p><div class="insight-callout">Women with biofilm try an average of 8.7 different treatments before finding one that works long-term.</div><button class="insight-continue-btn" onclick="navigateToStep('q5')">Continue</button></div></div>
+
+    <div class="quiz-step" id="q5"><p class="section-label">Bacterial Age</p><h1 class="question-title">What color is your typical vaginal discharge?</h1><div class="options-container single-select"><button class="option-btn" data-value="clear">Clear or white (minimal)</button><button class="option-btn" data-value="yellow">Yellow or white (moderate)</button><button class="option-btn" data-value="gray">Gray with odor</button><button class="option-btn" data-value="brown">Brown or blood-tinged</button></div></div>
+
+    <div class="quiz-step" id="q7"><p class="section-label">Hormonal Age / Glycogen Status</p><h1 class="question-title">What is your current age?</h1><div class="options-container single-select"><button class="option-btn" data-value="under35">Under 35</button><button class="option-btn" data-value="35-45">35-45</button><button class="option-btn" data-value="45-55">45-55</button><button class="option-btn" data-value="55plus">55+</button></div></div>
+
+    <div class="quiz-step" id="q8"><p class="section-label">Hormonal Age / Glycogen Status</p><h1 class="question-title">Do you experience any of these symptoms?</h1><p class="question-subtitle">Select all that apply</p><div class="options-container multi-select"><button class="option-btn multi" data-value="dryness">Vaginal dryness / need lubricant during intimacy</button><button class="option-btn multi" data-value="hotflashes">Irritation / discomfort</button><button class="option-btn multi" data-value="irregular">Irregular periods or stopped periods</button><button class="option-btn multi" data-value="none" data-exclusive="true">None of the above</button></div></div>
+
+    <div class="quiz-step" id="q9"><p class="section-label">Hormonal Age / Glycogen Status</p><h1 class="question-title">Have you tried probiotics for vaginal health?</h1><div class="options-container single-select"><button class="option-btn" data-value="no-improvement">Yes, no improvement</button><button class="option-btn" data-value="temporary">Yes, worked temporarily</button><button class="option-btn" data-value="still-taking">Yes, still taking them</button><button class="option-btn" data-value="never">No, never tried</button></div></div>
+
+    <div class="quiz-step" id="insight4"><div class="insight-screen"><p class="insight-label">Evaluating your probiotic compatibility...</p><div class="insight-stat-card"><p class="insight-stat-number" data-target="97" data-suffix="%">0</p></div><p class="insight-body"><strong>97% of vaginal probiotics</strong> on the market are designed for younger women with high glycogen levels. If your glycogen is low, these probiotics simply can't survive.</p><div class="insight-callout">Only spore-forming probiotics can colonize in low-glycogen environments.</div><button class="insight-continue-btn" onclick="navigateToStep('q10')">Continue</button></div></div>
+
+    <div class="quiz-step" id="q10"><p class="section-label">Urgency / Severity</p><h1 class="question-title">How is this affecting your life?</h1><p class="question-subtitle">Select all that apply</p><div class="options-container multi-select"><button class="option-btn multi" data-value="intimacy">Avoiding intimacy with partner</button><button class="option-btn multi" data-value="anxiety">Constant anxiety about smell</button><button class="option-btn multi" data-value="work-social">Impacting work/social situations</button><button class="option-btn multi" data-value="all" data-exclusive="true">All of the above</button></div></div>
+
+    <div class="quiz-step" id="q11"><p class="section-label">Urgency / Severity</p><h1 class="question-title">How long have you been dealing with this?</h1><div class="options-container single-select"><button class="option-btn" data-value="less6mo">Less than 6 months</button><button class="option-btn" data-value="6mo-1yr">6 months to 1 year</button><button class="option-btn" data-value="1-3yr">1-3 years</button><button class="option-btn" data-value="3plus">3+ years</button></div></div>
+
+    <div class="quiz-step" id="loading"><div class="loading-screen"><h2 class="loading-title">Analyzing your health profile</h2><div class="loading-progress"><div class="loading-progress-track"><div class="loading-progress-fill" id="loadingBar"></div></div><span class="loading-percent" id="loadingPercent">0%</span></div><div class="loading-steps-list"><div class="loading-step-item" id="loadStep1"><span class="step-check"></span><span>Analyzing odor type...</span></div><div class="loading-step-item" id="loadStep2"><span class="step-check"></span><span>Calculating bacterial age...</span></div><div class="loading-step-item" id="loadStep3"><span class="step-check"></span><span>Assessing biofilm probability...</span></div><div class="loading-step-item" id="loadStep4"><span class="step-check"></span><span>Evaluating glycogen status...</span></div><div class="loading-step-item" id="loadStep5"><span class="step-check"></span><span>Generating personalized protocol...</span></div></div></div></div>
+
+    <!-- RESULTS (original — now continues to extended flow) -->
+    <div class="quiz-step" id="results"><div class="results-page" id="resultsContent"></div></div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- EXTENDED FLOW (after results) -->
+    <!-- ═══════════════════════════════════════ -->
+
+    <div class="quiz-step" id="ext-stress"><h1 class="question-title">Do you have stress symptoms during the day? Like feeling tired, cranky, foggy, or moody.</h1><div class="options-container single-select"><button class="option-btn" data-value="yes">Yes</button><button class="option-btn" data-value="no">No</button></div></div>
+
+    <div class="quiz-step" id="ext-energy"><h1 class="question-title">How's your energy at 3pm compared to when you wake up?</h1><div class="options-container single-select"><button class="option-btn" data-value="drained">&#x1F62B; Completely drained - Need caffeine or a nap</button><button class="option-btn" data-value="lower">&#x1F4C9; Noticeably lower - Afternoon slump hits hard</button><button class="option-btn" data-value="slightly">&#x1F615; Slightly tired - Still functional but slower</button><button class="option-btn" data-value="same">&#x26A1; Same energy - No afternoon crash</button></div></div>
+
+    <div class="quiz-step" id="ext-sleep"><h1 class="question-title">How many hours of quality sleep do you get per night?</h1><div class="options-container single-select"><button class="option-btn" data-value="less5">Less than 5 hours</button><button class="option-btn" data-value="5-6">5-6 hours</button><button class="option-btn" data-value="7-8">7-8 hours</button><button class="option-btn" data-value="8plus">More than 8 hours</button></div></div>
+
+    <div class="quiz-step" id="ext-food"><h1 class="question-title">How often do you eat processed foods?</h1><div class="options-container single-select"><button class="option-btn" data-value="daily">Daily - Most meals include processed foods</button><button class="option-btn" data-value="several">Several times a week</button><button class="option-btn" data-value="occasionally">Occasionally - Mostly whole foods</button><button class="option-btn" data-value="rarely">Rarely - I avoid processed foods</button></div><div class="why-card"><h4>Why we ask</h4><p>Sugar and processed foods feed the bad bacteria that cause odor, discharge, and recurring BV. Your diet directly shapes your vaginal microbiome — and it's a big reason things keep coming back.</p></div></div>
+
+    <div class="quiz-step" id="ext-family"><h1 class="question-title">Do you have a family history of recurring infections or hormonal issues?</h1><div class="options-container single-select"><button class="option-btn" data-value="yes">Yes</button><button class="option-btn" data-value="no">No</button><button class="option-btn" data-value="notsure">Not Sure</button></div><div class="why-card"><h4>Why we ask</h4><p>These conditions share similar root causes — hormonal imbalance, inflammation, and microbiome disruption. Family patterns help us identify your risk factors.</p></div></div>
+
+    <!-- EXT: Analyzing spinner -->
+    <div class="quiz-step" id="ext-analyze"><div class="ext-loading"><h2 class="loading-title">Analyzing your health profile...</h2><div class="ext-spinner"></div><p style="font-size:14px;color:var(--brown-800);max-width:400px;margin:0 auto;line-height:1.6">Based on your responses, we're building a comprehensive assessment of your vaginal health and identifying the key factors affecting your balance.</p></div></div>
+
+    <!-- EXT: Expected results (multi-select) -->
+    <div class="quiz-step" id="ext-goals"><h1 class="question-title">What results are you expecting from finding the right solution?</h1><p class="question-subtitle">(Choose all that apply)</p><div class="options-container ext-multi" id="extGoalsOpts"><button class="option-btn" data-value="fresh">Lasting freshness without thinking about it</button><button class="option-btn" data-value="intimacy">Comfortable intimacy again</button><button class="option-btn" data-value="cycle">Breaking the cycle for good</button><button class="option-btn" data-value="confident">Feeling confident and like myself again</button><button class="option-btn" data-value="all">All of the above</button></div><button class="btn-ext" id="extGoalsBtn" onclick="navigateToStep('ext-social')" disabled>Continue <span>&rarr;</span></button></div>
+
+    <!-- EXT: Social proof with carousel -->
+    <div class="quiz-step" id="ext-social"><div style="text-align:center;padding:20px 0"><h2 style="font-size:26px;font-weight:700;color:var(--brown-950);margin-bottom:16px">You are in the right place &#x1F49B;</h2><p style="font-size:16px;color:var(--brown-900);max-width:440px;margin:0 auto;line-height:1.6">Over <strong>47,832 women</strong> have found lasting relief thanks to our clinically-backed approach!</p></div>
+    <div style="position:relative;width:100%;max-width:360px;margin:24px auto 0;overflow:hidden;border-radius:8px;border:1px solid var(--border)"><div id="extCarouselTrack" style="display:flex;transition:transform .6s ease"><div style="flex:0 0 100%"><img src="https://cdn.shopify.com/s/files/1/0671/0345/7420/files/Image_28_f8c92cff-074b-40b3-b545-b0a4cb0d88db.webp?v=1774352752" alt="Testimonial 1" style="width:100%;display:block"></div><div style="flex:0 0 100%"><img src="https://cdn.shopify.com/s/files/1/0671/0345/7420/files/Image_16.webp?v=1774352752" alt="Testimonial 2" style="width:100%;display:block"></div><div style="flex:0 0 100%"><img src="https://cdn.shopify.com/s/files/1/0671/0345/7420/files/Image_23_f41bf923-0602-4378-8615-bee8e71d3827.webp?v=1774352750" alt="Testimonial 3" style="width:100%;display:block"></div></div></div>
+    <div id="extCarouselDots" style="display:flex;justify-content:center;gap:8px;margin-top:14px"></div>
+    <button class="btn-ext" onclick="navigateToStep('ext-build')" style="max-width:480px;margin:24px auto 0">Continue <span>&rarr;</span></button></div>
+
+    <!-- EXT: Building profile step loader -->
+    <div class="quiz-step" id="ext-build"><div style="text-align:center;padding:40px 0"><h2 class="loading-title">Building your profile...</h2><div class="build-steps" id="buildSteps"><div class="build-step" id="bs1"><div class="build-step-icon">&#x1F4CA;</div><span class="build-step-text">Analysing your profile</span></div><div class="build-step" id="bs2"><div class="build-step-icon">&#x1F504;</div><span class="build-step-text">Gathering relevant data</span></div><div class="build-step" id="bs3"><div class="build-step-icon">&#x1F4CA;</div><span class="build-step-text">Finalizing calculations</span></div><div class="build-step" id="bs4"><div class="build-step-icon"><div class="ext-spinner" style="width:24px;height:24px;border-width:3px;margin:0"></div></div><span class="build-step-text">Almost there...</span></div></div></div></div>
+
+    <!-- EXT: Final profile summary -->
+    <div class="quiz-step" id="ext-profile"><div class="profile-card" id="extProfileCard"><h1 class="profile-card-title">Summary of your Profile</h1><p class="profile-card-sub">Based on your responses, here's what's happening:</p></div><button class="btn-ext" onclick="navigateToStep('ext-chart')" style="max-width:480px">CONTINUE <span>&rarr;</span></button></div>
+
+    <!-- EXT: SECTION 4 — Your Timeline + Chart -->
+    <div class="quiz-step" id="ext-chart">
+        <h1 class="question-title" style="text-align:center">Your personalized timeline</h1>
+        <p class="question-subtitle" style="text-align:center">Based on your profile, here's when most women with multiple high ages start seeing results:</p>
+        <div class="chart-wrap">
+            <svg viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg">
+                <line x1="60" y1="20" x2="60" y2="210" stroke="#542C0D" stroke-width="2"/>
+                <line x1="60" y1="210" x2="420" y2="210" stroke="#542C0D" stroke-width="2"/>
+                <line x1="60" y1="120" x2="420" y2="120" stroke="#542C0D" stroke-width="1" stroke-dasharray="4"/>
+                <text x="8" y="28" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">FEELING</text>
+                <text x="8" y="42" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">FRESH</text>
+                <text x="8" y="118" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">BALANCED</text>
+                <text x="8" y="200" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">OUT OF</text>
+                <text x="8" y="214" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">BALANCE</text>
+                <defs><linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#CA8504" stop-opacity="0.6"/><stop offset="100%" stop-color="#CA8504" stop-opacity="0.05"/></linearGradient></defs>
+                <path d="M60,195 C120,190 180,170 240,140 C300,110 360,65 400,45 L400,210 L60,210 Z" fill="url(#gfill)"/>
+                <path d="M60,195 C120,190 180,170 240,140 C300,110 360,65 400,45" fill="none" stroke="#CA8504" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="60" cy="195" r="5" fill="#fff" stroke="#542C0D" stroke-width="3"/>
+                <circle cx="180" cy="170" r="4" fill="#CA8504" opacity=".6"/>
+                <circle cx="300" cy="110" r="4" fill="#CA8504" opacity=".6"/>
+                <circle cx="400" cy="45" r="6" fill="#fff" stroke="#CA8504" stroke-width="3"/>
+                <rect x="55" y="170" width="118" height="20" rx="4" fill="#542C0D"/>
+                <text x="114" y="184" font-size="9" fill="#fff" font-weight="700" font-family="sans-serif" text-anchor="middle">YOU ARE HERE</text>
+                <rect x="270" y="28" width="148" height="22" rx="4" fill="#CA8504"/>
+                <text x="344" y="43" font-size="9" fill="#fff" font-weight="700" font-family="sans-serif" text-anchor="middle">GOAL: FRESH &amp; FREE</text>
+                <line x1="344" y1="50" x2="400" y2="45" stroke="#CA8504" stroke-width="1.5"/>
+                <text x="68" y="240" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">TODAY</text>
+                <text x="148" y="240" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">1-2 WEEKS</text>
+                <text x="260" y="240" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">3-4 WEEKS</text>
+                <text x="375" y="240" font-size="9" font-weight="700" font-family="monospace" fill="#542C0D">90 DAYS</text>
+                <!-- milestone labels -->
+                <text x="68" y="256" font-size="7" font-family="sans-serif" fill="#854A0E">Multiple ages</text>
+                <text x="68" y="265" font-size="7" font-family="sans-serif" fill="#854A0E">elevated</text>
+                <text x="148" y="256" font-size="7" font-family="sans-serif" fill="#854A0E">Odor starts</text>
+                <text x="148" y="265" font-size="7" font-family="sans-serif" fill="#854A0E">calming down</text>
+                <text x="260" y="256" font-size="7" font-family="sans-serif" fill="#854A0E">Post-period smell</text>
+                <text x="260" y="265" font-size="7" font-family="sans-serif" fill="#854A0E">test passes</text>
+                <text x="375" y="256" font-size="7" font-family="sans-serif" fill="#854A0E">Complete elimination</text>
+                <text x="375" y="265" font-size="7" font-family="sans-serif" fill="#854A0E">results last months</text>
+            </svg>
+        </div>
+        <button class="btn-ext" onclick="navigateToStep('ext-results')" style="max-width:480px">Continue <span>&rarr;</span></button>
+    </div>
+
+    <!-- EXT: SECTION 5 — Expected Results -->
+    <div class="quiz-step" id="ext-results">
+        <div class="prod-card" style="max-width:480px;margin:20px auto">
+            <div class="prod-badge">92% of Women Saw Results*</div>
+            <div style="font-size:13px;color:var(--brown-800);margin-bottom:14px">*In an independent study of Nuora customers.</div>
+            <div style="text-align:left;padding:0 4px 8px;border-top:1px solid var(--border);padding-top:16px">
+                <div style="display:flex;gap:10px;margin-bottom:12px;font-size:14px;color:var(--brown-900)"><span style="color:var(--yellow-600);font-weight:700">&#9679;</span> <strong>94%</strong> of customers reported reduced odor within two weeks</div>
+                <div style="display:flex;gap:10px;margin-bottom:12px;font-size:14px;color:var(--brown-900)"><span style="color:var(--yellow-600);font-weight:700">&#9679;</span> <strong>91%</strong> experienced complete elimination of post-period odor within 30 days</div>
+                <div style="display:flex;gap:10px;margin-bottom:12px;font-size:14px;color:var(--brown-900)"><span style="color:var(--yellow-600);font-weight:700">&#9679;</span> <strong>87%</strong> of customers who used Nuora for 90 days found complete elimination of vaginal odor, with results lasting months after</div>
+            </div>
+            <div class="prod-benefits">
+                <div class="ben"><span class="ico">&#x2728;</span>Balance<br>pH</div>
+                <div class="ben"><span class="ico">&#x1F33F;</span>Clinical<br>Probiotic</div>
+                <div class="ben"><span class="ico">&#x1F4A7;</span>Restore<br>Freshness</div>
+                <div class="ben"><span class="ico">&#x1F6E1;&#xFE0F;</span>90-Day<br>Guarantee</div>
+            </div>
+        </div>
+        <p style="font-size:13px;color:var(--brown-800);text-align:center;margin:4px 0 14px"><strong style="color:var(--brown-950)">47,832 women</strong> have found relief with Nuora</p>
+        <button class="btn-ext" onclick="navigateToStep('ext-offer')" style="max-width:480px">Continue <span>&rarr;</span></button>
+    </div>
+
+    <!-- EXT: SECTION 6 — You Qualify / Final Offer -->
+    <div class="quiz-step" id="ext-offer">
+        <div class="offer-box">
+            <h2>You'll Restore Natural Balance With Just a 90-Day Supply from Nuora</h2>
+            <p class="offer-sub">Because you qualify, <u>we guarantee the reduction of your vaginal odor</u> with our clinical-dose formula.</p>
+            <p style="font-size:15px;font-weight:700;color:var(--brown-950);text-align:center;margin-bottom:24px;text-decoration:underline">If not, you'll receive a full refund — no questions asked!</p>
+
+            <!-- Product benefits radiating -->
+            <div class="prod-card">
+                <div class="prod-benefits" style="gap:16px">
+                    <div class="ben"><span class="ico">&#x1F9EC;</span>Break<br>Biofilm</div>
+                    <div class="ben"><span class="ico">&#x2728;</span>Restore<br>pH</div>
+                    <div class="ben"><span class="ico">&#x1F33F;</span>Survive Low<br>Glycogen</div>
+                    <div class="ben"><span class="ico">&#x1F4AA;</span>Support<br>Tissue</div>
+                    <div class="ben"><span class="ico">&#x1F6E1;&#xFE0F;</span>Long-Term<br>Relief</div>
+                </div>
+            </div>
+
+            <button class="btn-claim" onclick="window.location.href='https://mynuora.com/products/feminine-balance-gummies-1'"><span>CLAIM YOUR DISCOUNT</span><span>&#x27A4;</span></button>
+
+            <p style="font-size:12px;color:var(--brown-800);text-align:center;margin-top:14px">90-day money-back guarantee · Free shipping · Cancel anytime</p>
+
+            <div style="text-align:center;margin-top:16px"><span class="guarantee"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>90-Day Money-Back Guarantee</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-bar" id="bottomBar"><button class="continue-btn" id="globalContinueBtn" disabled>Continue</button></div>
+
+<script>
+// ═══ STATE ═══
+var quizState = { currentStep:'welcome', answers:{}, stepHistory:[] };
+
+// Original flow order (unchanged)
+var stepOrder = ['welcome','q1','q2','insight1','q3','q4','insight2','q5','q7','q8','q9','insight4','q10','q11','loading','results'];
+
+// Extended flow order (after results)
+var extOrder = ['ext-stress','ext-energy','ext-sleep','ext-food','ext-family','ext-analyze','ext-goals','ext-social','ext-build','ext-profile','ext-chart','ext-results','ext-offer'];
+
+var allSteps = stepOrder.concat(extOrder);
+var insightSteps = ['insight1','insight2','insight4'];
+var continueConfig = { 'q8':{next:'q9',multiSelect:true}, 'q10':{next:'q11',multiSelect:true} };
+
+// Extended single-select steps
+var extSingleSteps = ['ext-stress','ext-energy','ext-sleep','ext-food','ext-family'];
+
+// Progress: total steps for percentage
+var totalSteps = allSteps.length;
+
+function getProgress(stepId){
+    var idx = allSteps.indexOf(stepId);
+    if(idx<0) return 0;
+    return Math.round((idx/(totalSteps-1))*100);
+}
+
+// ═══ INIT ═══
+document.addEventListener('DOMContentLoaded', function(){
+    showStep('welcome');
+    updateBackButton();
+    updateBottomBar();
+    updateProgress();
+    setupEventListeners();
+});
+
+function setupEventListeners(){
+    document.getElementById('startBtn').addEventListener('click',function(){navigateToStep('q1')});
+
+    // Original single-select
+    document.querySelectorAll('.single-select .option-btn').forEach(function(btn){
+        btn.addEventListener('click',function(e){handleSingleSelect(e.target.closest('.option-btn'))});
+    });
+
+    // Original multi-select
+    document.querySelectorAll('.multi-select .option-btn').forEach(function(btn){
+        btn.addEventListener('click',function(e){handleMultiSelect(e.target.closest('.option-btn'))});
+    });
+
+    // Extended multi-select (goals)
+    document.querySelectorAll('#extGoalsOpts .option-btn').forEach(function(btn){
+        btn.addEventListener('click',function(e){
+            var b=e.target.closest('.option-btn');
+            b.classList.toggle('selected');
+            document.getElementById('extGoalsBtn').disabled=!document.querySelector('#extGoalsOpts .option-btn.selected');
+        });
+    });
+
+    document.getElementById('globalContinueBtn').addEventListener('click',handleGlobalContinue);
+    document.getElementById('backBtn').addEventListener('click',goBack);
+}
+
+function handleSingleSelect(button){
+    if(!button) return;
+    var container=button.closest('.options-container');
+    container.querySelectorAll('.option-btn').forEach(function(b){b.classList.remove('selected')});
+    button.classList.add('selected');
+
+    var currentStep=document.querySelector('.quiz-step.active').id;
+    quizState.answers[currentStep]=button.getAttribute('data-value');
+
+    // Determine next step
+    var currentIndex=stepOrder.indexOf(currentStep);
+    if(currentIndex>=0 && currentIndex<stepOrder.length-1){
+        var nextStep=stepOrder[currentIndex+1];
+        setTimeout(function(){navigateToStep(nextStep)},350);
+    }
+    // Extended single-selects
+    else if(extSingleSteps.indexOf(currentStep)!==-1){
+        var extIdx=extOrder.indexOf(currentStep);
+        if(extIdx>=0 && extIdx<extOrder.length-1){
+            setTimeout(function(){navigateToStep(extOrder[extIdx+1])},350);
+        }
+    }
+}
+
+function handleMultiSelect(button){
+    if(!button) return;
+    var isExclusive=button.getAttribute('data-exclusive')==='true';
+    var container=button.closest('.options-container');
+    if(isExclusive){
+        container.querySelectorAll('.option-btn').forEach(function(b){if(b!==button)b.classList.remove('selected')});
+        button.classList.toggle('selected');
+    } else {
+        container.querySelectorAll('.option-btn[data-exclusive="true"]').forEach(function(b){b.classList.remove('selected')});
+        button.classList.toggle('selected');
+    }
+    var selected=container.querySelectorAll('.option-btn.selected');
+    document.getElementById('globalContinueBtn').disabled=selected.length===0;
+    var currentStep=document.querySelector('.quiz-step.active').id;
+    quizState.answers[currentStep]=Array.from(selected).map(function(b){return b.getAttribute('data-value')});
+}
+
+function handleGlobalContinue(){
+    var config=continueConfig[quizState.currentStep];
+    if(!config) return;
+    if(config.multiSelect){
+        var activeStep=document.querySelector('.quiz-step.active');
+        var selected=activeStep.querySelectorAll('.option-btn.selected');
+        quizState.answers[quizState.currentStep]=Array.from(selected).map(function(b){return b.getAttribute('data-value')});
+    }
+    navigateToStep(config.next);
+}
+
+function goBack(){
+    if(!quizState.stepHistory.length) return;
+    var prev=quizState.stepHistory.pop();
+    var cur=document.querySelector('.quiz-step.active');
+    if(cur){cur.classList.remove('active');cur.style.paddingBottom=''}
+    var el=document.getElementById(prev);
+    if(el){el.classList.add('active');quizState.currentStep=prev;updateProgress();updateBottomBar();updateBackButton();window.scrollTo({top:0,behavior:'smooth'})}
+}
+
+function navigateToStep(stepId){
+    quizState.stepHistory.push(quizState.currentStep);
+    var cur=document.querySelector('.quiz-step.active');
+    if(cur){cur.classList.remove('active');cur.style.paddingBottom=''}
+    var next=document.getElementById(stepId);
+    if(next){
+        next.classList.add('active');
+        quizState.currentStep=stepId;
+        updateProgress();updateBottomBar();updateBackButton();
+        window.scrollTo({top:0,behavior:'smooth'});
+
+        // Animate insight stats
+        if(insightSteps.indexOf(stepId)!==-1){
+            var el=next.querySelector('.insight-stat-number');
+            if(el) setTimeout(function(){animateStat(el)},200);
+        }
+        // Original loading
+        if(stepId==='loading') startLoadingAnimation();
+        // Build original results
+        if(stepId==='results') buildResultsPage();
+        // Ext: social proof carousel
+        if(stepId==='ext-social') initExtCarousel();
+        else stopExtCarousel();
+        // Ext: analyze spinner auto-advance
+        if(stepId==='ext-analyze') setTimeout(function(){navigateToStep('ext-goals')},3000);
+        // Ext: build profile step loader
+        if(stepId==='ext-build') runBuildSteps();
+        // Ext: profile summary
+        if(stepId==='ext-profile') buildExtProfile();
+        // Ext: chart uses fixed milestones now
+    }
+}
+
+function showStep(stepId){var s=document.getElementById(stepId);if(s){s.classList.add('active');quizState.currentStep=stepId}}
+
+function updateProgress(){document.getElementById('progressBar').style.width=getProgress(quizState.currentStep)+'%'}
+
+function updateBottomBar(){
+    var bar=document.getElementById('bottomBar'),btn=document.getElementById('globalContinueBtn');
+    var config=continueConfig[quizState.currentStep];
+    var active=document.querySelector('.quiz-step.active');
+    if(config){
+        bar.style.display='block';
+        if(config.multiSelect){var sel=active?active.querySelectorAll('.option-btn.selected'):[];btn.disabled=sel.length===0}
+        else btn.disabled=false;
+        if(active) active.style.paddingBottom='100px';
+    } else {
+        bar.style.display='none';
+        if(active) active.style.paddingBottom='';
+    }
+}
+
+function updateBackButton(){
+    var btn=document.getElementById('backBtn');
+    var noBack=['welcome','loading','results','ext-analyze','ext-build','ext-profile','ext-chart','ext-results','ext-offer'];
+    btn.style.display=noBack.indexOf(quizState.currentStep)!==-1?'none':'flex';
+}
+
+function animateStat(el){
+    var target=parseInt(el.getAttribute('data-target'),10),suffix=el.getAttribute('data-suffix')||'',dur=1500,start=null;
+    function ease(t){return t===1?1:1-Math.pow(2,-10*t)}
+    function frame(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),v=Math.round(ease(p)*target);el.textContent=(target>=1000?v.toLocaleString():v)+suffix;if(p<1)requestAnimationFrame(frame)}
+    el.textContent='0';requestAnimationFrame(frame);
+}
+
+// ═══ ORIGINAL LOADING ═══
+function startLoadingAnimation(){
+    var bar=document.getElementById('loadingBar'),pct=document.getElementById('loadingPercent');
+    var steps=[{id:'loadStep1',p:20},{id:'loadStep2',p:40},{id:'loadStep3',p:60},{id:'loadStep4',p:80},{id:'loadStep5',p:100}];
+    var i=0;document.getElementById(steps[0].id).classList.add('active');
+    var iv=setInterval(function(){
+        if(i<steps.length){
+            bar.style.width=steps[i].p+'%';pct.textContent=steps[i].p+'%';
+            var el=document.getElementById(steps[i].id);if(el){el.classList.remove('active');el.classList.add('complete')}
+            i++;if(i<steps.length){var n=document.getElementById(steps[i].id);if(n)n.classList.add('active')}
+        }else{clearInterval(iv);setTimeout(function(){navigateToStep('results')},600)}
+    },900);
+}
+
+// ═══ ORIGINAL RESULTS (profile summary with 6 meters) ═══
+function buildResultsPage(){
+    var html='';
+    html+='<div class="profile-card"><h1 class="profile-card-title">Summary of your Profile</h1><p class="profile-card-sub">Based on your responses, here\'s what\'s happening:</p>';
+
+    var meters=[
+        {label:'Bacteria Age (Type)',level:'high',explain:'Your bacteria type determines which treatments work. Generic probiotics aren\'t formulated for this specific type, which is why they failed.'},
+        {label:'Biofilm Age',level:'high',explain:'Blocks treatments from reaching bacteria. This is why probiotics worked for 2 weeks then stopped.'},
+        {label:'pH Age',level:'high',explain:'Elevated pH allows odor-causing bacteria to thrive. Healthy vaginal pH should be 3.5-4.5.'},
+        {label:'Glycogen Age',level:'elevated',explain:'Low glycogen starves good bacteria. After 35, glycogen production drops 70%, making it harder for probiotics to colonize.'},
+        {label:'Inflammation Age',level:'elevated',explain:'Chronic inflammation damages tissue over time. Creates environment where bad bacteria flourish.'},
+        {label:'Hormonal Stress Age',level:'elevated',explain:'Suppresses immune response and creates cascade effect. Keeps other ages elevated even when you\'re doing everything right.'}
+    ];
+    var pos={low:8,normal:30,elevated:58,high:88};
+    var badges={low:'LOW',normal:'NORMAL',elevated:'ELEVATED',high:'HIGH LEVEL'};
+    meters.forEach(function(m){
+        html+='<div class="profile-meter"><div class="profile-meter-header"><span class="profile-meter-label">'+m.label+'</span><span class="meter-badge '+m.level+'">'+badges[m.level]+'</span></div>';
+        html+='<div class="gauge-track"><div class="gauge-thumb" style="left:'+pos[m.level]+'%"></div></div>';
+        html+='<div class="gauge-labels"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div>';
+        html+='<p class="meter-explain">'+m.explain+'</p></div>';
+    });
+    html+='<div class="flora-callout"><div class="flora-icon">!</div><div><p class="flora-callout-title">Vaginal Flora Assessment: IMBALANCED</p><p class="flora-callout-text">Your good bacteria have been suppressed, allowing odor-causing microbes to take over. Without the right support, this cycle keeps repeating.</p></div></div>';
+    html+='<div class="stat-grid"><div class="stat-box"><p class="stat-box-label">Imbalance Pattern:</p><p class="stat-box-val">Recurring</p></div><div class="stat-box"><p class="stat-box-label">Room for Improvement:</p><p class="stat-box-val">HIGH</p></div><div class="stat-box"><p class="stat-box-label">Root Causes:</p><p class="stat-box-val">Diet & Stress</p></div><div class="stat-box"><p class="stat-box-label">Quality of Life Impact:</p><p class="stat-box-val">Substantial</p></div></div>';
+    html+='</div>';
+
+    // CTA now continues to extended flow instead of linking out
+    html+='<button class="btn-ext" onclick="navigateToStep(\'ext-stress\')" style="max-width:480px">CONTINUE <span>&rarr;</span></button>';
+
+    document.getElementById('resultsContent').innerHTML=html;
+}
+
+// ═══ EXT: BUILD STEPS LOADER ═══
+function runBuildSteps(){
+    var steps=['bs1','bs2','bs3','bs4'],i=0;
+    document.getElementById(steps[0]).classList.add('active');
+    var iv=setInterval(function(){
+        document.getElementById(steps[i]).classList.remove('active');
+        document.getElementById(steps[i]).classList.add('done');
+        i++;
+        if(i<steps.length){document.getElementById(steps[i]).classList.add('active')}
+        else{clearInterval(iv);setTimeout(function(){navigateToStep('ext-profile')},600)}
+    },1000);
+}
+
+// ═══ EXT: CAROUSEL ═══
+var extCarouselIv=null;
+function initExtCarousel(){
+    var track=document.getElementById('extCarouselTrack'),dots=document.getElementById('extCarouselDots');
+    if(!track||!dots)return;
+    var count=track.children.length,cur=0;
+    dots.innerHTML='';
+    for(var i=0;i<count;i++){
+        var d=document.createElement('button');
+        d.style.cssText='width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;transition:all .3s;background:'+(i===0?'var(--yellow-600)':'var(--yellow-200)');
+        if(i===0){d.style.width='24px';d.style.borderRadius='4px'}
+        d.setAttribute('data-idx',i);
+        d.onclick=(function(idx){return function(){goExtSlide(idx)}})(i);
+        dots.appendChild(d);
+    }
+    function goExtSlide(idx){
+        cur=idx;track.style.transform='translateX(-'+(idx*100)+'%)';
+        var ds=dots.children;
+        for(var j=0;j<ds.length;j++){
+            ds[j].style.background=j===idx?'var(--yellow-600)':'var(--yellow-200)';
+            ds[j].style.width=j===idx?'24px':'8px';
+            ds[j].style.borderRadius=j===idx?'4px':'50%';
+        }
+    }
+    window._goExtSlide=goExtSlide;
+    stopExtCarousel();
+    extCarouselIv=setInterval(function(){cur=(cur+1)%count;goExtSlide(cur)},3500);
+}
+function stopExtCarousel(){if(extCarouselIv){clearInterval(extCarouselIv);extCarouselIv=null}}
+
+// ═══ EXT: PROFILE SUMMARY (reuses same design) ═══
+function buildExtProfile(){
+    var card=document.getElementById('extProfileCard');
+    // Remove old meters if re-visiting
+    card.querySelectorAll('.profile-meter,.flora-callout,.stat-grid').forEach(function(e){e.remove()});
+
+    var meters=[
+        {label:'Bacteria Age (Type)',level:'high',explain:'Your bacteria type determines which treatments work. Generic probiotics aren\'t formulated for this specific type, which is why they failed.'},
+        {label:'Biofilm Age',level:'high',explain:'Blocks treatments from reaching bacteria. This is why probiotics worked for 2 weeks then stopped.'},
+        {label:'pH Age',level:'high',explain:'Elevated pH allows odor-causing bacteria to thrive. Healthy vaginal pH should be 3.5-4.5.'},
+        {label:'Glycogen Age',level:'elevated',explain:'Low glycogen starves good bacteria. After 35, glycogen production drops 70%, making it harder for probiotics to colonize.'},
+        {label:'Inflammation Age',level:'elevated',explain:'Chronic inflammation damages tissue over time. Creates environment where bad bacteria flourish.'},
+        {label:'Hormonal Stress Age',level:'elevated',explain:'Suppresses immune response and creates cascade effect. Keeps other ages elevated even when you\'re doing everything right.'}
+    ];
+    var pos={low:8,normal:30,elevated:58,high:88};
+    var badges={low:'LOW',normal:'NORMAL',elevated:'ELEVATED',high:'HIGH LEVEL'};
+    var html='';
+    meters.forEach(function(m){
+        html+='<div class="profile-meter"><div class="profile-meter-header"><span class="profile-meter-label">'+m.label+'</span><span class="meter-badge '+m.level+'">'+badges[m.level]+'</span></div>';
+        html+='<div class="gauge-track"><div class="gauge-thumb" style="left:'+pos[m.level]+'%"></div></div>';
+        html+='<div class="gauge-labels"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div>';
+        html+='<p class="meter-explain">'+m.explain+'</p></div>';
+    });
+    html+='<div class="flora-callout"><div class="flora-icon">!</div><div><p class="flora-callout-title">Vaginal Flora Assessment: IMBALANCED</p><p class="flora-callout-text">Your good bacteria have been suppressed, allowing odor-causing microbes to take over. Without the right support, this cycle keeps repeating.</p></div></div>';
+    html+='<div class="stat-grid"><div class="stat-box"><p class="stat-box-label">Imbalance Pattern:</p><p class="stat-box-val">Recurring</p></div><div class="stat-box"><p class="stat-box-label">Room for Improvement:</p><p class="stat-box-val">HIGH</p></div><div class="stat-box"><p class="stat-box-label">Root Causes:</p><p class="stat-box-val">Diet & Stress</p></div><div class="stat-box"><p class="stat-box-label">Quality of Life Impact:</p><p class="stat-box-val">Substantial</p></div></div>';
+    card.insertAdjacentHTML('beforeend',html);
+}
+</script>
+</body>
+</html>
