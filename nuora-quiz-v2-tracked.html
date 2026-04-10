@@ -1,0 +1,451 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+[id="nuora-quiz-root"],[id="nuora-quiz-root"] *,[id="nuora-quiz-root"] *::before,[id="nuora-quiz-root"] *::after{all:revert!important;box-sizing:border-box!important}
+[id="nuora-quiz-root"]{all:unset!important;display:block!important;--nq-bg:#FFF;--nq-w:#FFF;--nq-y25:#FEFDF0;--nq-y50:#FEFBE8;--nq-y100:#FEF7C3;--nq-y200:#FDE272;--nq-y400:#FAC515;--nq-y500:#EAAA08;--nq-y600:#CA8504;--nq-b8:#854A0E;--nq-b9:#713B12;--nq-b95:#542C0D;--nq-rose:#9B083E;--nq-rosebg:#FDF0F4;--nq-green:#276536;--nq-greenbg:#F0FDF4;--nq-bdr:rgba(113,59,18,.1);font-family:'Montserrat',sans-serif!important;background:var(--nq-bg)!important;color:var(--nq-b95)!important;line-height:1.6!important;-webkit-font-smoothing:antialiased!important;max-width:680px!important;margin:0 auto!important;padding:40px 20px!important;position:relative!important}
+[id="nuora-quiz-root"] h1,[id="nuora-quiz-root"] h2,[id="nuora-quiz-root"] h3{font-family:Georgia,'Times New Roman',serif!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] p,[id="nuora-quiz-root"] span,[id="nuora-quiz-root"] div{margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] button{outline:none!important;-webkit-tap-highlight-color:transparent!important}
+[id="nuora-quiz-root"] strong{font-weight:700!important;color:inherit!important}
+[id="nuora-quiz-root"] .nq-hdr{display:flex!important;align-items:center!important;gap:12px!important;margin-bottom:16px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-back{display:none!important;align-items:center!important;justify-content:center!important;width:44px!important;height:44px!important;min-width:44px!important;border:none!important;background:none!important;cursor:pointer!important;border-radius:4px!important;padding:0!important;margin:0!important}
+[id="nuora-quiz-root"] .nq-back:active{background:var(--nq-y100)!important}
+[id="nuora-quiz-root"] .nq-back svg{color:var(--nq-b8)!important;width:24px!important;height:24px!important}
+[id="nuora-quiz-root"] .nq-pbar{flex:1!important;height:10px!important;min-height:10px!important;max-height:10px!important;background:var(--nq-y100)!important;border-radius:4px!important;overflow:hidden!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-pfill{height:100%!important;min-height:10px!important;background:var(--nq-y400)!important;width:0%!important;border-radius:4px!important;transition:width .5s!important;display:block!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-scr{display:none!important;animation:nqFade .4s ease!important;padding-top:20px!important}
+[id="nuora-quiz-root"] .nq-scr.nq-active{display:block!important}
+@keyframes nqFade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+[id="nuora-quiz-root"] .nq-title{font-size:32px!important;font-weight:700!important;color:var(--nq-b9)!important;margin-bottom:12px!important;line-height:1.2!important;padding:0!important;text-align:left!important}
+[id="nuora-quiz-root"] .nq-sub{font-size:15px!important;color:var(--nq-b8)!important;margin-bottom:24px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-label{font-size:12px!important;font-weight:700!important;letter-spacing:1.5px!important;text-transform:uppercase!important;color:var(--nq-b8)!important;margin-bottom:8px!important;opacity:.7!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-opts{display:flex!important;flex-direction:column!important;gap:12px!important;margin-bottom:24px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-opt{background:var(--nq-w)!important;border:1px solid var(--nq-bdr)!important;border-radius:4px!important;padding:20px 24px!important;font-family:'Montserrat',sans-serif!important;font-size:16px!important;color:var(--nq-b9)!important;text-align:left!important;cursor:pointer!important;transition:all .2s!important;font-weight:500!important;display:flex!important;align-items:center!important;gap:14px!important;width:100%!important;margin:0!important;line-height:1.5!important}
+[id="nuora-quiz-root"] .nq-opt:hover{border-color:var(--nq-y400)!important;background:var(--nq-y50)!important}
+[id="nuora-quiz-root"] .nq-opt.nq-sel{background:var(--nq-y50)!important;border-color:var(--nq-y400)!important;color:var(--nq-b95)!important}
+[id="nuora-quiz-root"] .nq-single .nq-opt::before{content:''!important;width:22px!important;height:22px!important;min-width:22px!important;border-radius:50%!important;border:2px solid var(--nq-bdr)!important;background:var(--nq-w)!important;transition:all .2s!important;display:inline-flex!important;margin:0!important;padding:0!important;flex-shrink:0!important}
+[id="nuora-quiz-root"] .nq-single .nq-opt:hover::before{border-color:var(--nq-y400)!important}
+[id="nuora-quiz-root"] .nq-single .nq-opt.nq-sel::before{border-color:var(--nq-b95)!important;background:var(--nq-b95)!important;box-shadow:inset 0 0 0 3px white!important}
+[id="nuora-quiz-root"] .nq-multi .nq-opt::before{content:'\2713'!important;width:22px!important;height:22px!important;min-width:22px!important;border-radius:4px!important;border:2px solid var(--nq-bdr)!important;background:var(--nq-w)!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-size:13px!important;font-weight:700!important;color:transparent!important;transition:all .2s!important;margin:0!important;padding:0!important;flex-shrink:0!important}
+[id="nuora-quiz-root"] .nq-multi .nq-opt:hover::before{border-color:var(--nq-y400)!important}
+[id="nuora-quiz-root"] .nq-multi .nq-opt.nq-sel::before{border-color:var(--nq-b95)!important;background:var(--nq-b95)!important;color:var(--nq-y400)!important}
+[id="nuora-quiz-root"] .nq-btn{width:100%!important;background:var(--nq-y400)!important;color:var(--nq-b95)!important;border:none!important;border-radius:4px!important;padding:18px 32px!important;font-family:'Montserrat',sans-serif!important;font-size:18px!important;font-weight:700!important;cursor:pointer!important;transition:all .2s!important;margin:0!important;display:block!important;text-align:center!important;line-height:1.4!important}
+[id="nuora-quiz-root"] .nq-btn:hover:not(:disabled){background:var(--nq-y500)!important;transform:translateY(-1px)!important}
+[id="nuora-quiz-root"] .nq-btn:disabled{opacity:.4!important;cursor:not-allowed!important}
+[id="nuora-quiz-root"] .nq-bottombar{position:fixed!important;bottom:0!important;left:0!important;right:0!important;padding:16px 20px!important;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))!important;background:var(--nq-bg)!important;z-index:9999!important;border-top:1px solid var(--nq-bdr)!important;display:none!important}
+[id="nuora-quiz-root"] .nq-bottombar .nq-btn{max-width:640px!important;margin:0 auto!important}
+[id="nuora-quiz-root"] .nq-welcome{text-align:center!important;padding:20px 0 40px!important}
+[id="nuora-quiz-root"] .nq-welcome h1{font-size:34px!important;color:var(--nq-b9)!important;line-height:1.25!important;margin-bottom:16px!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-welcome .nq-welcsub{font-size:16px!important;color:var(--nq-b8)!important;margin-bottom:32px!important;line-height:1.7!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-benlist{text-align:left!important;margin:0 auto 36px!important;max-width:520px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-benitem{display:flex!important;align-items:flex-start!important;gap:12px!important;padding:10px 0!important;font-size:15px!important;color:var(--nq-b9)!important;line-height:1.5!important;margin:0!important}
+[id="nuora-quiz-root"] .nq-benchk{width:22px!important;height:22px!important;min-width:22px!important;background:var(--nq-y400)!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin-top:2px!important;flex-shrink:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-benchk svg{width:14px!important;height:14px!important;color:var(--nq-b95)!important}
+[id="nuora-quiz-root"] .nq-startbtn{display:inline-block!important;background:var(--nq-y400)!important;color:var(--nq-b95)!important;border:none!important;border-radius:4px!important;padding:20px 48px!important;font-family:'Montserrat',sans-serif!important;font-size:18px!important;font-weight:700!important;cursor:pointer!important;width:100%!important;max-width:400px!important;margin:0!important;text-align:center!important;line-height:1.4!important}
+[id="nuora-quiz-root"] .nq-welcfoot{font-size:13px!important;color:var(--nq-b8)!important;margin-top:12px!important;opacity:.7!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-insightcard{background:var(--nq-y100)!important;border-radius:8px!important;padding:40px 24px!important;text-align:center!important;margin-bottom:24px!important}
+[id="nuora-quiz-root"] .nq-insightnum{font-size:72px!important;font-weight:900!important;color:var(--nq-b9)!important;line-height:1!important;font-family:'Montserrat',sans-serif!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-insightbody{font-size:16px!important;color:var(--nq-b8)!important;line-height:1.7!important;margin-bottom:24px!important}
+[id="nuora-quiz-root"] .nq-insightcall{background:var(--nq-y100)!important;border-left:4px solid var(--nq-y400)!important;border-radius:4px!important;padding:16px 20px!important;margin-bottom:32px!important;font-size:14px!important;font-weight:600!important;color:var(--nq-b9)!important;line-height:1.6!important}
+[id="nuora-quiz-root"] .nq-insightbtn{width:100%!important;background:var(--nq-y400)!important;color:var(--nq-b95)!important;border:none!important;border-radius:4px!important;padding:18px 32px!important;font-family:'Montserrat',sans-serif!important;font-size:18px!important;font-weight:700!important;cursor:pointer!important;margin:0!important;text-align:center!important;line-height:1.4!important}
+[id="nuora-quiz-root"] .nq-loadwrap{text-align:center!important;padding:60px 20px!important}
+[id="nuora-quiz-root"] .nq-loadtitle{font-size:28px!important;color:var(--nq-b9)!important;margin-bottom:40px!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-loadtrack{width:100%!important;height:28px!important;min-height:28px!important;background:var(--nq-y100)!important;border-radius:8px!important;overflow:hidden!important;margin-bottom:12px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-loadfill{height:100%!important;min-height:28px!important;background:var(--nq-y400)!important;border-radius:8px!important;width:0%!important;transition:width .8s!important;display:block!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-loadpct{font-size:16px!important;font-weight:700!important;color:var(--nq-b8)!important;display:block!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-loadlist{text-align:left!important;max-width:380px!important;margin:24px auto 0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-loadstep{display:flex!important;align-items:center!important;gap:14px!important;padding:14px 0!important;font-size:15px!important;color:var(--nq-b8)!important;opacity:.4!important;transition:all .3s!important;margin:0!important}
+[id="nuora-quiz-root"] .nq-loadstep.nq-lstep-active{opacity:1!important;color:var(--nq-b9)!important;font-weight:500!important}
+[id="nuora-quiz-root"] .nq-loadstep.nq-lstep-done{opacity:1!important;color:var(--nq-b9)!important}
+[id="nuora-quiz-root"] .nq-lstepchk{width:26px!important;height:26px!important;min-width:26px!important;border-radius:50%!important;border:2px solid var(--nq-bdr)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:13px!important;flex-shrink:0!important;transition:all .3s!important;padding:0!important;margin:0!important}
+[id="nuora-quiz-root"] .nq-loadstep.nq-lstep-active .nq-lstepchk{border-color:var(--nq-y400)!important;background:var(--nq-y100)!important}
+[id="nuora-quiz-root"] .nq-loadstep.nq-lstep-done .nq-lstepchk{border-color:var(--nq-y500)!important;background:var(--nq-y400)!important;color:var(--nq-b95)!important}
+[id="nuora-quiz-root"] .nq-loadstep.nq-lstep-done .nq-lstepchk::after{content:'\2713'!important;font-weight:700!important}
+[id="nuora-quiz-root"] .nq-profilecard{background:var(--nq-y50)!important;border:1px solid var(--nq-bdr)!important;border-radius:8px!important;padding:32px 24px!important;margin-bottom:24px!important}
+[id="nuora-quiz-root"] .nq-proftitle{font-size:28px!important;font-weight:700!important;color:var(--nq-b9)!important;text-align:center!important;margin-bottom:8px!important}
+[id="nuora-quiz-root"] .nq-profsub{font-size:15px!important;color:var(--nq-b8)!important;text-align:center!important;margin-bottom:24px!important}
+[id="nuora-quiz-root"] .nq-meter{background:var(--nq-w)!important;border:1px solid var(--nq-bdr)!important;border-radius:8px!important;padding:20px 24px!important;margin-bottom:12px!important}
+[id="nuora-quiz-root"] .nq-meterhdr{display:flex!important;justify-content:space-between!important;align-items:center!important;margin-bottom:12px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-meterlbl{font-size:14px!important;font-weight:700!important;color:var(--nq-b9)!important;text-transform:uppercase!important;letter-spacing:.5px!important}
+[id="nuora-quiz-root"] .nq-badge{font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;margin:0!important;line-height:1.4!important}
+[id="nuora-quiz-root"] .nq-badge-high{background:var(--nq-rosebg)!important;color:var(--nq-rose)!important}
+[id="nuora-quiz-root"] .nq-badge-elevated{background:var(--nq-y100)!important;color:var(--nq-y600)!important}
+[id="nuora-quiz-root"] .nq-badge-normal{background:var(--nq-greenbg)!important;color:var(--nq-green)!important}
+[id="nuora-quiz-root"] .nq-badge-low{background:var(--nq-greenbg)!important;color:var(--nq-green)!important}
+[id="nuora-quiz-root"] .nq-gauge{position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;padding:0!important;overflow:visible!important}
+[id="nuora-quiz-root"] .nq-thumb{position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:var(--nq-w)!important;border:3px solid var(--nq-b9)!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;transition:left .8s!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-gaugelbl{display:flex!important;justify-content:space-between!important;font-size:11px!important;font-weight:600!important;color:var(--nq-b8)!important;text-transform:uppercase!important;letter-spacing:.3px!important;margin-bottom:10px!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-meterexp{font-size:13px!important;color:var(--nq-b8)!important;line-height:1.6!important}
+[id="nuora-quiz-root"] .nq-flora{background:var(--nq-w)!important;border:1px solid var(--nq-bdr)!important;border-radius:8px!important;padding:20px 24px!important;margin-top:16px!important;display:flex!important;gap:14px!important;align-items:flex-start!important}
+[id="nuora-quiz-root"] .nq-floraicon{width:32px!important;height:32px!important;min-width:32px!important;background:var(--nq-y400)!important;border-radius:6px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:16px!important;font-weight:800!important;color:var(--nq-b95)!important;flex-shrink:0!important;padding:0!important;margin:0!important}
+[id="nuora-quiz-root"] .nq-floratitle{font-size:14px!important;font-weight:700!important;color:var(--nq-b9)!important;margin-bottom:4px!important}
+[id="nuora-quiz-root"] .nq-floratext{font-size:13px!important;color:var(--nq-b8)!important;line-height:1.6!important}
+[id="nuora-quiz-root"] .nq-extbtn{width:100%!important;padding:18px 24px!important;background:var(--nq-y400)!important;color:var(--nq-b95)!important;border:none!important;border-radius:4px!important;font-family:'Montserrat',sans-serif!important;font-size:16px!important;font-weight:700!important;cursor:pointer!important;transition:all .2s!important;display:flex!important;align-items:center!important;justify-content:space-between!important;margin-top:20px!important;line-height:1.4!important;text-align:left!important}
+[id="nuora-quiz-root"] .nq-extbtn:hover{background:var(--nq-y500)!important;transform:translateY(-1px)!important}
+[id="nuora-quiz-root"] .nq-chartwrap{background:var(--nq-w)!important;border-radius:8px!important;padding:24px!important;border:1px solid var(--nq-bdr)!important;margin:16px 0!important}
+[id="nuora-quiz-root"] .nq-chartwrap svg{width:100%!important;height:auto!important;display:block!important}
+[id="nuora-quiz-root"] .nq-offer{text-align:center!important}
+[id="nuora-quiz-root"] .nq-offer h2{font-size:26px!important;font-weight:700!important;color:var(--nq-b95)!important;line-height:1.3!important;margin-bottom:8px!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-offersub{font-size:14px!important;color:var(--nq-b8)!important;margin-bottom:16px!important;line-height:1.5!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-prodcard{background:var(--nq-w)!important;border-radius:8px!important;padding:28px 24px!important;border:1px solid var(--nq-bdr)!important;margin:20px 0!important;text-align:center!important}
+[id="nuora-quiz-root"] .nq-prodcard img{width:100%!important;border-radius:8px!important;display:block!important;margin:0!important;padding:0!important}
+[id="nuora-quiz-root"] .nq-claimbtn{width:100%!important;padding:20px 24px!important;background:var(--nq-y400)!important;color:var(--nq-b95)!important;border:none!important;border-radius:4px!important;font-family:'Montserrat',sans-serif!important;font-size:17px!important;font-weight:700!important;cursor:pointer!important;transition:all .2s!important;display:flex!important;align-items:center!important;justify-content:space-between!important;animation:nqPulse 3s ease-in-out infinite!important;margin:0!important;line-height:1.4!important;text-align:left!important}
+[id="nuora-quiz-root"] .nq-claimbtn:hover{background:var(--nq-y500)!important;transform:translateY(-2px)!important;animation:none!important}
+@keyframes nqPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+[id="nuora-quiz-root"] .nq-guarantee{display:inline-flex!important;align-items:center!important;gap:8px!important;background:var(--nq-y50)!important;border:1px solid var(--nq-bdr)!important;border-radius:4px!important;padding:10px 18px!important;font-size:14px!important;font-weight:600!important;color:var(--nq-b9)!important;margin-top:16px!important}
+@media(max-width:768px){[id="nuora-quiz-root"]{padding:20px 16px!important}[id="nuora-quiz-root"] .nq-title{font-size:26px!important}[id="nuora-quiz-root"] .nq-opt{padding:16px 20px!important;font-size:15px!important}[id="nuora-quiz-root"] .nq-welcome h1{font-size:26px!important}[id="nuora-quiz-root"] .nq-insightnum{font-size:56px!important}[id="nuora-quiz-root"] .nq-profilecard{padding:24px 16px!important}[id="nuora-quiz-root"] .nq-meter{padding:16px!important}}
+@media(max-width:480px){[id="nuora-quiz-root"] .nq-title{font-size:22px!important}[id="nuora-quiz-root"] .nq-opt{padding:18px 16px!important;font-size:14px!important}[id="nuora-quiz-root"] .nq-welcome h1{font-size:23px!important}[id="nuora-quiz-root"] .nq-insightnum{font-size:48px!important}[id="nuora-quiz-root"] .nq-proftitle{font-size:24px!important}}
+</style>
+
+<div id="nuora-quiz-root">
+<div style="display:flex!important;align-items:center!important;gap:12px!important;margin-bottom:16px!important">
+<button id="nqBack" style="display:none!important;align-items:center!important;justify-content:center!important;width:44px!important;height:44px!important;min-width:44px!important;border:none!important;background:none!important;cursor:pointer!important;border-radius:4px!important;padding:0!important;margin:0!important;font-size:24px!important;color:#854A0E!important">&#x2039;</button>
+<div style="flex:1!important;height:10px!important;min-height:10px!important;max-height:10px!important;background:#FEF7C3!important;border-radius:4px!important;overflow:hidden!important;position:relative!important;display:block!important;margin:0!important;padding:0!important"><div id="nqPfill" style="height:10px!important;min-height:10px!important;background:#FAC515!important;border-radius:4px!important;display:block!important;position:absolute!important;top:0!important;left:0!important;transition:width .5s!important;width:0%!important;margin:0!important;padding:0!important"></div></div>
+</div>
+
+<div class="nq-scr nq-active" id="nqWelcome"><div class="nq-welcome">
+<h1>Discover Your Vaginal Health Profile: Which Bacteria Type & Root Cause is Affecting You?</h1>
+<p class="nq-welcsub">Take this 90 second assessment to identify your specific odor type, bacterial age, biofilm status, and hormonal factors to get your personalized protocol.</p>
+<div class="nq-benlist">
+<div class="nq-benitem"><div style="width:22px!important;height:22px!important;min-width:22px!important;background:#FAC515!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin-top:2px!important;flex-shrink:0!important;font-size:12px!important;font-weight:700!important;color:#542C0D!important">&#10003;</div><span>Identify which of 3 bacteria types is causing your specific odor</span></div>
+<div class="nq-benitem"><div style="width:22px!important;height:22px!important;min-width:22px!important;background:#FAC515!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin-top:2px!important;flex-shrink:0!important;font-size:12px!important;font-weight:700!important;color:#542C0D!important">&#10003;</div><span>Discover your bacterial age vs chronological age</span></div>
+<div class="nq-benitem"><div style="width:22px!important;height:22px!important;min-width:22px!important;background:#FAC515!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin-top:2px!important;flex-shrink:0!important;font-size:12px!important;font-weight:700!important;color:#542C0D!important">&#10003;</div><span>Find out if biofilm is blocking your treatments</span></div>
+<div class="nq-benitem"><div style="width:22px!important;height:22px!important;min-width:22px!important;background:#FAC515!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;margin-top:2px!important;flex-shrink:0!important;font-size:12px!important;font-weight:700!important;color:#542C0D!important">&#10003;</div><span>Learn if low glycogen is preventing probiotics from working</span></div>
+</div>
+<button class="nq-startbtn" id="nqStart">Start Assessment</button>
+<p class="nq-welcfoot">Takes about 90 seconds. Your answers are private.</p>
+</div></div>
+
+<div class="nq-scr" id="nqQ1"><p class="nq-label">Odor Type Identification</p><h1 class="nq-title">Which description best matches your vaginal odor?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="ammonia">Sharp, chemical smell (like bleach or ammonia)</button><button class="nq-opt" data-v="fishy">Ocean-like, fishy smell</button><button class="nq-opt" data-v="musty">Musty, damp smell (like old bathroom)</button><button class="nq-opt" data-v="mixed">No consistent smell / varies</button></div></div>
+<div class="nq-scr" id="nqQ2"><p class="nq-label">Odor Type Identification</p><h1 class="nq-title">When is your odor most noticeable?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="urination">Right after urination</button><button class="nq-opt" data-v="sexual">After sexual activity</button><button class="nq-opt" data-v="constant">Constant throughout the day</button><button class="nq-opt" data-v="period">After my period</button></div></div>
+<div class="nq-scr" id="nqInsight1"><div style="padding:24px 0 40px!important"><p class="nq-label">Your odor type is being analyzed...</p><div class="nq-insightcard"><p class="nq-insightnum" id="nqIs1">0</p></div><p class="nq-insightbody">There are <strong>3 distinct bacteria types</strong> that cause vaginal odor.</p><div class="nq-insightcall">97% of women we surveyed were using treatments designed for the wrong bacteria type.</div><button class="nq-insightbtn" onclick="nqNav('nqQ3')">Continue</button></div></div>
+<div class="nq-scr" id="nqQ3"><p class="nq-label">Biofilm Presence</p><h1 class="nq-title">How long do treatments (probiotics, boric acid, etc.) provide relief?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="2-5days">2-5 days, then smell returns</button><button class="nq-opt" data-v="1week">1 week, then gradual return</button><button class="nq-opt" data-v="none">No improvement at all</button><button class="nq-opt" data-v="untried">Haven't tried treatments yet</button></div></div>
+<div class="nq-scr" id="nqQ4"><p class="nq-label">Biofilm Presence</p><h1 class="nq-title">How many different treatments have you tried?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="3plus">3 or more with no lasting results</button><button class="nq-opt" data-v="1-2">1-2 treatments</button><button class="nq-opt" data-v="zero">None yet</button></div></div>
+<div class="nq-scr" id="nqInsight2"><div style="padding:24px 0 40px!important"><p class="nq-label">Checking your biofilm status...</p><div class="nq-insightcard"><p class="nq-insightnum" id="nqIs2">0</p></div><p class="nq-insightbody">Biofilm makes bacteria up to <strong>1,000x more resistant</strong> to treatment.</p><div class="nq-insightcall">Women with biofilm try an average of 8.7 different treatments before finding one that works long-term.</div><button class="nq-insightbtn" onclick="nqNav('nqQ5')">Continue</button></div></div>
+<div class="nq-scr" id="nqQ5"><p class="nq-label">Bacterial Age</p><h1 class="nq-title">What color is your typical vaginal discharge?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="clear">Clear or white (minimal)</button><button class="nq-opt" data-v="yellow">Yellow or white (moderate)</button><button class="nq-opt" data-v="gray">Gray with odor</button><button class="nq-opt" data-v="brown">Brown or blood-tinged</button></div></div>
+<div class="nq-scr" id="nqQ7"><p class="nq-label">Hormonal Age / Glycogen Status</p><h1 class="nq-title">What is your current age?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="under35">Under 35</button><button class="nq-opt" data-v="35-45">35-45</button><button class="nq-opt" data-v="45-55">45-55</button><button class="nq-opt" data-v="55plus">55+</button></div></div>
+<div class="nq-scr" id="nqQ8"><p class="nq-label">Hormonal Age / Glycogen Status</p><h1 class="nq-title">Do you experience any of these symptoms?</h1><p class="nq-sub">Select all that apply</p><div class="nq-opts nq-multi"><button class="nq-opt" data-v="dryness">Vaginal dryness / need lubricant during intimacy</button><button class="nq-opt" data-v="irritation">Irritation / discomfort</button><button class="nq-opt" data-v="irregular">Irregular periods or stopped periods</button><button class="nq-opt" data-v="none" data-ex="1">None of the above</button></div></div>
+<div class="nq-scr" id="nqQ9"><p class="nq-label">Hormonal Age / Glycogen Status</p><h1 class="nq-title">Have you tried probiotics for vaginal health?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="no-improvement">Yes, no improvement</button><button class="nq-opt" data-v="temporary">Yes, worked temporarily</button><button class="nq-opt" data-v="still-taking">Yes, still taking them</button><button class="nq-opt" data-v="never">No, never tried</button></div></div>
+<div class="nq-scr" id="nqInsight4"><div style="padding:24px 0 40px!important"><p class="nq-label">Evaluating your probiotic compatibility...</p><div class="nq-insightcard"><p class="nq-insightnum" id="nqIs4">0</p></div><p class="nq-insightbody"><strong>97% of vaginal probiotics</strong> on the market are designed for younger women with high glycogen levels. If your glycogen is low, these probiotics simply can't survive.</p><div class="nq-insightcall">Only spore-forming probiotics can colonize in low-glycogen environments.</div><button class="nq-insightbtn" onclick="nqNav('nqQ10')">Continue</button></div></div>
+<div class="nq-scr" id="nqQ10"><p class="nq-label">Urgency / Severity</p><h1 class="nq-title">How is this affecting your life?</h1><p class="nq-sub">Select all that apply</p><div class="nq-opts nq-multi"><button class="nq-opt" data-v="intimacy">Avoiding intimacy with partner</button><button class="nq-opt" data-v="anxiety">Constant anxiety about smell</button><button class="nq-opt" data-v="work-social">Impacting work/social situations</button><button class="nq-opt" data-v="all" data-ex="1">All of the above</button></div></div>
+<div class="nq-scr" id="nqQ11"><p class="nq-label">Urgency / Severity</p><h1 class="nq-title">How long have you been dealing with this?</h1><div class="nq-opts nq-single"><button class="nq-opt" data-v="less6mo">Less than 6 months</button><button class="nq-opt" data-v="6mo-1yr">6 months to 1 year</button><button class="nq-opt" data-v="1-3yr">1-3 years</button><button class="nq-opt" data-v="3plus">3+ years</button></div></div>
+
+<div class="nq-scr" id="nqLoading"><div class="nq-loadwrap"><h2 class="nq-loadtitle">Analyzing your health profile</h2><div><div style="width:100%!important;height:28px!important;min-height:28px!important;background:#FEF7C3!important;border-radius:8px!important;overflow:hidden!important;margin-bottom:12px!important;position:relative!important;display:block!important;padding:0!important"><div id="nqLbar" style="height:28px!important;min-height:28px!important;background:#FAC515!important;border-radius:8px!important;display:block!important;position:absolute!important;top:0!important;left:0!important;transition:width .8s!important;width:0%!important;margin:0!important;padding:0!important"></div></div><span class="nq-loadpct" id="nqLpct">0%</span></div><div class="nq-loadlist"><div class="nq-loadstep" id="nqLs1"><span class="nq-lstepchk"></span><span>Analyzing odor type...</span></div><div class="nq-loadstep" id="nqLs2"><span class="nq-lstepchk"></span><span>Calculating bacterial age...</span></div><div class="nq-loadstep" id="nqLs3"><span class="nq-lstepchk"></span><span>Assessing biofilm probability...</span></div><div class="nq-loadstep" id="nqLs4"><span class="nq-lstepchk"></span><span>Evaluating glycogen status...</span></div><div class="nq-loadstep" id="nqLs5"><span class="nq-lstepchk"></span><span>Generating personalized protocol...</span></div></div></div></div>
+
+<div class="nq-scr" id="nqResults">
+<div class="nq-profilecard">
+<h1 class="nq-proftitle">Summary of your Profile</h1>
+<p class="nq-profsub">Based on your responses, here's what's happening:</p>
+<div style="background:var(--nq-rosebg)!important;border:1px solid var(--nq-rose)!important;border-radius:8px!important;padding:16px 20px!important;margin-bottom:20px!important;text-align:center!important">
+<div style="font-size:12px!important;font-weight:700!important;color:var(--nq-b8)!important;text-transform:uppercase!important;letter-spacing:1px!important;margin-bottom:6px!important">Your Detected Bacteria Type</div>
+<div id="nqBtText" style="font-size:22px!important;font-weight:900!important;color:var(--nq-rose)!important">Analyzing...</div>
+</div>
+<div class="nq-meter"><div class="nq-meterhdr"><span class="nq-meterlbl">Bacteria Age (Type)</span><span class="nq-badge nq-badge-high" id="nqM1b">HIGH LEVEL</span></div><div style="position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;overflow:visible!important;padding:0!important"><div id="nqM1t" style="position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;left:88%!important;margin:0!important;padding:0!important"></div></div><div class="nq-gaugelbl"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div><p class="nq-meterexp">Your bacteria type determines which treatments work. Generic probiotics aren't formulated for this specific type, which is why they failed.</p></div>
+<div class="nq-meter"><div class="nq-meterhdr"><span class="nq-meterlbl">Biofilm Age</span><span id="nqM2b" style="font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;background:#FDF0F4!important;color:#9B083E!important">HIGH LEVEL</span></div><div style="position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;overflow:visible!important;padding:0!important"><div id="nqM2t" style="position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;left:88%!important;margin:0!important;padding:0!important"></div></div><div class="nq-gaugelbl"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div><p class="nq-meterexp">Blocks treatments from reaching bacteria. This is why probiotics worked for 2 weeks then stopped.</p></div>
+<div class="nq-meter"><div class="nq-meterhdr"><span class="nq-meterlbl">pH Age</span><span id="nqM3b" style="font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;background:#FDF0F4!important;color:#9B083E!important">HIGH LEVEL</span></div><div style="position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;overflow:visible!important;padding:0!important"><div id="nqM3t" style="position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;left:88%!important;margin:0!important;padding:0!important"></div></div><div class="nq-gaugelbl"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div><p class="nq-meterexp">Elevated pH allows odor-causing bacteria to thrive. Healthy vaginal pH should be 3.5-4.5.</p></div>
+<div class="nq-meter"><div class="nq-meterhdr"><span class="nq-meterlbl">Glycogen Age</span><span id="nqM4b" style="font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;background:#FEF7C3!important;color:#CA8504!important">ELEVATED</span></div><div style="position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;overflow:visible!important;padding:0!important"><div id="nqM4t" style="position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;left:58%!important;margin:0!important;padding:0!important"></div></div><div class="nq-gaugelbl"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div><p class="nq-meterexp">Low glycogen starves good bacteria. After 35, glycogen production drops 70%, making it harder for probiotics to colonize.</p></div>
+<div class="nq-meter"><div class="nq-meterhdr"><span class="nq-meterlbl">Inflammation Age</span><span id="nqM5b" style="font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;background:#FEF7C3!important;color:#CA8504!important">ELEVATED</span></div><div style="position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;overflow:visible!important;padding:0!important"><div id="nqM5t" style="position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;left:58%!important;margin:0!important;padding:0!important"></div></div><div class="nq-gaugelbl"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div><p class="nq-meterexp">Chronic inflammation damages tissue over time. Creates environment where bad bacteria flourish.</p></div>
+<div class="nq-meter"><div class="nq-meterhdr"><span class="nq-meterlbl">Hormonal Stress Age</span><span id="nqM6b" style="font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;background:#FEF7C3!important;color:#CA8504!important">ELEVATED</span></div><div style="position:relative!important;height:12px!important;min-height:12px!important;border-radius:6px!important;background:linear-gradient(to right,#4CAF50,#EAAA08 40%,#E57C0A 70%,#D32F2F 100%)!important;margin-bottom:8px!important;overflow:visible!important;padding:0!important"><div id="nqM6t" style="position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;left:58%!important;margin:0!important;padding:0!important"></div></div><div class="nq-gaugelbl"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div><p class="nq-meterexp">Suppresses immune response and creates cascade effect. Keeps other ages elevated even when you're doing everything right.</p></div>
+<div class="nq-flora"><div class="nq-floraicon">!</div><div><p class="nq-floratitle">Vaginal Flora Assessment: IMBALANCED</p><p class="nq-floratext">Your good bacteria have been suppressed, allowing odor-causing microbes to take over. Without the right support, this cycle keeps repeating.</p></div></div>
+</div>
+<button class="nq-extbtn" onclick="nqNav('nqChart')">CONTINUE <span style="float:right!important">&rarr;</span></button>
+</div>
+
+<div class="nq-scr" id="nqChart"><h1 class="nq-title" style="text-align:center!important">Your personalized timeline</h1><p class="nq-sub" style="text-align:center!important">Based on your profile, here's when most women with multiple high ages start seeing results:</p><div style="background:#FFF!important;border-radius:8px!important;padding:24px 16px!important;border:1px solid rgba(113,59,18,.1)!important;margin:16px 0!important">
+<div style="display:flex!important;gap:0!important;margin-bottom:8px!important">
+<div style="display:flex!important;flex-direction:column!important;justify-content:space-between!important;width:52px!important;min-width:52px!important;padding-right:6px!important;padding-top:0!important;padding-bottom:0!important">
+<div style="font-size:8px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important;line-height:1.2!important;text-align:right!important">FEELING<br>FRESH</div>
+<div style="font-size:8px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important;text-align:right!important">BALANCED</div>
+<div style="font-size:8px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important;line-height:1.2!important;text-align:right!important">OUT OF<br>BALANCE</div>
+</div>
+<div style="position:relative!important;flex:1!important;height:200px!important;border-left:2px solid #542C0D!important;border-bottom:2px solid #542C0D!important">
+<div style="position:absolute!important;left:0!important;top:50%!important;width:100%!important;border-top:1px dashed #542C0D!important;opacity:.3!important"></div>
+<div style="position:absolute!important;bottom:0!important;left:0!important;right:0!important;height:100%!important;background:linear-gradient(to top right,rgba(202,133,4,.02) 0%,rgba(202,133,4,.3) 100%)!important;clip-path:polygon(0% 90%,30% 80%,55% 60%,80% 30%,100% 10%,100% 100%,0% 100%)!important"></div>
+<div style="position:absolute!important;bottom:0!important;left:0!important;right:0!important;height:100%!important;background:transparent!important;border:none!important">
+<div style="position:absolute!important;width:3px!important;height:3px!important;background:#CA8504!important;border-radius:50%!important;bottom:10%!important;left:0%!important"></div>
+</div>
+<div style="position:absolute!important;bottom:8%!important;left:0%!important;background:#542C0D!important;color:#FFF!important;font-size:9px!important;font-weight:700!important;font-family:sans-serif!important;padding:4px 10px!important;border-radius:4px!important;white-space:nowrap!important">YOU ARE HERE</div>
+<div style="position:absolute!important;top:5%!important;right:0%!important;background:#CA8504!important;color:#FFF!important;font-size:9px!important;font-weight:700!important;font-family:sans-serif!important;padding:4px 10px!important;border-radius:4px!important;white-space:nowrap!important">GOAL: FRESH & FREE</div>
+<div style="position:absolute!important;bottom:9%!important;left:-1%!important;width:12px!important;height:12px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important"></div>
+<div style="position:absolute!important;top:8%!important;right:-1%!important;width:14px!important;height:14px!important;background:#FFF!important;border:3px solid #CA8504!important;border-radius:50%!important"></div>
+</div>
+</div>
+<div style="display:flex!important;justify-content:space-between!important;padding:8px 0 0!important;margin-left:52px!important">
+<div style="text-align:center!important;flex:1!important"><div style="font-size:9px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important">TODAY</div><div style="font-size:7px!important;color:#854A0E!important;margin-top:2px!important">Multiple ages<br>elevated</div></div>
+<div style="text-align:center!important;flex:1!important"><div style="font-size:9px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important">1-2 WEEKS</div><div style="font-size:7px!important;color:#854A0E!important;margin-top:2px!important">Odor starts<br>calming down</div></div>
+<div style="text-align:center!important;flex:1!important"><div style="font-size:9px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important">3-4 WEEKS</div><div style="font-size:7px!important;color:#854A0E!important;margin-top:2px!important">Post-period smell<br>test passes</div></div>
+<div style="text-align:center!important;flex:1!important"><div style="font-size:9px!important;font-weight:700!important;font-family:monospace!important;color:#542C0D!important">90 DAYS</div><div style="font-size:7px!important;color:#854A0E!important;margin-top:2px!important">Complete elimination<br>results last months</div></div>
+</div>
+</div>
+<div style="text-align:left!important;padding:20px 4px 0!important">
+<div style="display:flex!important;gap:10px!important;margin-bottom:12px!important;font-size:14px!important;color:var(--nq-b9)!important"><span style="color:var(--nq-y600)!important;font-weight:700!important">&#9679;</span><strong>94%</strong> of customers reported reduced odor within two weeks</div>
+<div style="display:flex!important;gap:10px!important;margin-bottom:12px!important;font-size:14px!important;color:var(--nq-b9)!important"><span style="color:var(--nq-y600)!important;font-weight:700!important">&#9679;</span><strong>91%</strong> experienced complete elimination of post-period odor within 30 days</div>
+<div style="display:flex!important;gap:10px!important;margin-bottom:12px!important;font-size:14px!important;color:var(--nq-b9)!important"><span style="color:var(--nq-y600)!important;font-weight:700!important">&#9679;</span><strong>87%</strong> of customers who used Nuora for 90 days found complete elimination of vaginal odor, with results lasting months after</div>
+</div>
+<button class="nq-extbtn" style="margin-top:24px!important" onclick="nqNav('nqOffer')">Continue <span style="float:right!important">&rarr;</span></button></div>
+
+<div class="nq-scr" id="nqOffer"><div class="nq-offer"><h2 style="font-size:22px!important;margin-bottom:6px!important">You'll Restore Natural Balance With Just a 90-Day Supply from Nuora</h2><p class="nq-offersub" style="font-size:13px!important;margin-bottom:8px!important">Because you qualify, <u>we guarantee the reduction of your vaginal odor</u> with our clinical-dose formula.</p><p style="font-size:13px!important;font-weight:700!important;color:var(--nq-b95)!important;text-align:center!important;margin-bottom:12px!important;text-decoration:underline!important">If not, you'll receive a full refund — no questions asked!</p><div style="background:var(--nq-w)!important;border-radius:8px!important;padding:12px!important;border:1px solid var(--nq-bdr)!important;margin:0 0 12px!important;text-align:center!important"><img src="https://cdn.shopify.com/s/files/1/0671/0345/7420/files/image_0a2fb111-7fd3-41d9-8130-6cf7256fca56.webp?v=1775647490" alt="Nuora Feminine Balance Gummies" style="width:100%!important;max-height:280px!important;object-fit:contain!important;border-radius:8px!important;display:block!important;margin:0!important;padding:0!important"></div><button class="nq-claimbtn" onclick="window.top.location.href='https://mynuora.com/products/feminine-balance-gummies-1'"><span>CLAIM YOUR DISCOUNT</span><span>&#x27A4;</span></button><p style="font-size:11px!important;color:var(--nq-b8)!important;text-align:center!important;margin-top:10px!important">90-day money-back guarantee · Free shipping · Cancel anytime</p><div style="text-align:center!important;margin-top:10px!important"><span class="nq-guarantee" style="font-size:12px!important;padding:8px 14px!important"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>90-Day Money-Back Guarantee</span></div></div></div>
+</div>
+
+<div id="nqBar" style="display:none!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;padding:16px 20px!important;background:#FFF!important;z-index:9999!important;border-top:1px solid rgba(113,59,18,.1)!important"><button class="nq-btn" id="nqGcb" disabled style="width:100%!important;max-width:640px!important;margin:0 auto!important;background:#FAC515!important;color:#542C0D!important;border:none!important;border-radius:4px!important;padding:18px 32px!important;font-family:'Montserrat',sans-serif!important;font-size:18px!important;font-weight:700!important;cursor:pointer!important;display:block!important;text-align:center!important;line-height:1.4!important">Continue</button></div>
+
+<script>
+(function(){
+var NQ={},NQH=[],NQC='nqWelcome';
+var NQF=['nqWelcome','nqQ1','nqQ2','nqInsight1','nqQ3','nqQ4','nqInsight2','nqQ5','nqQ7','nqQ8','nqQ9','nqInsight4','nqQ10','nqQ11','nqLoading','nqResults','nqChart','nqOffer'];
+var NQMC={'nqQ8':{n:'nqQ9'},'nqQ10':{n:'nqQ11'}};
+var NQNB=['nqWelcome','nqLoading','nqResults','nqChart','nqOffer'];
+var nqRoot=document.getElementById('nuora-quiz-root');
+function nqEl(id){return document.getElementById(id)}
+function nqPct(id){var i=NQF.indexOf(id);return i<0?0:Math.round(i/(NQF.length-1)*100)}
+
+// ============================================
+// TRACKER - Google Sheets + GA4 (V2)
+// ============================================
+var SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwl6xbB9mkS6pfJygmWb-xMjGofvp-NnzN95JHk_o-_T80Oa8RSH9AkyXEwlFuMw-fm/exec';
+
+var nqTracker = {
+    sessionId: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2),
+    startTime: Date.now(),
+
+    stepNames: {
+        'nqWelcome': 'Welcome Screen',
+        'nqQ1': 'Odor Type - Description',
+        'nqQ2': 'Odor Type - Timing',
+        'nqInsight1': 'Insight - Bacteria Types',
+        'nqQ3': 'Biofilm - Treatment Duration',
+        'nqQ4': 'Biofilm - Treatments Tried',
+        'nqInsight2': 'Insight - Biofilm Resistance',
+        'nqQ5': 'Bacterial Age - Discharge',
+        'nqQ7': 'Hormonal - Current Age',
+        'nqQ8': 'Hormonal - Symptoms',
+        'nqQ9': 'Hormonal - Probiotics Tried',
+        'nqInsight4': 'Insight - Glycogen',
+        'nqQ10': 'Severity - Life Impact',
+        'nqQ11': 'Severity - Duration',
+        'nqLoading': 'Loading Analysis',
+        'nqResults': 'Results - Profile',
+        'nqChart': 'Results - Timeline',
+        'nqOffer': 'Offer Page'
+    },
+
+    stepNumbers: {
+        'nqWelcome': 0, 'nqQ1': 1, 'nqQ2': 2, 'nqInsight1': 3,
+        'nqQ3': 4, 'nqQ4': 5, 'nqInsight2': 6, 'nqQ5': 7,
+        'nqQ7': 8, 'nqQ8': 9, 'nqQ9': 10, 'nqInsight4': 11,
+        'nqQ10': 12, 'nqQ11': 13, 'nqLoading': 14,
+        'nqResults': 15, 'nqChart': 16, 'nqOffer': 17
+    },
+
+    trackStep: function(stepId, eventType) {
+        var event = {
+            timestamp: new Date().toISOString(),
+            session_id: this.sessionId,
+            quiz_version: 'v2',
+            step_id: stepId,
+            step_name: this.stepNames[stepId] || stepId,
+            step_number: this.stepNumbers[stepId] || 0,
+            path: 'single',
+            event_type: eventType || 'step_view',
+            user_agent: navigator.userAgent,
+            referrer: document.referrer || 'direct'
+        };
+
+        // GA4 via postMessage to parent (Shopify)
+        try {
+            window.parent.postMessage({
+                type: 'nuora_quiz_event',
+                eventName: eventType === 'quiz_complete' ? 'quiz_complete' : 'quiz_step',
+                payload: {
+                    quiz_version: 'v2',
+                    step_id: stepId,
+                    step_name: event.step_name,
+                    step_number: event.step_number,
+                    quiz_path: 'single',
+                    event_type: eventType || 'step_view',
+                    session_id: this.sessionId
+                }
+            }, '*');
+        } catch(e) {}
+
+        // Google Sheets
+        this.sendToSheets(event);
+    },
+
+    sendToSheets: function(event) {
+        // Primary: sendBeacon
+        try {
+            var blob = new Blob([JSON.stringify(event)], { type: 'application/json' });
+            navigator.sendBeacon(SHEETS_WEBHOOK_URL, blob);
+        } catch(e) {
+            // Fallback: fetch
+            fetch(SHEETS_WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(event)
+            }).catch(function() {});
+        }
+        // Final fallback: image pixel
+        var params = Object.keys(event).map(function(key) {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(event[key]);
+        }).join('&');
+        var img = new Image();
+        img.src = SHEETS_WEBHOOK_URL + '?' + params;
+    }
+};
+
+// Track quiz start on welcome screen
+nqTracker.trackStep('nqWelcome', 'quiz_start');
+
+// ============================================
+// END TRACKER
+// ============================================
+
+function nqSetProgress(pct){
+  var el=nqEl('nqPfill');
+  if(el) el.setAttribute('style','height:10px!important;min-height:10px!important;background:#FAC515!important;border-radius:4px!important;display:block!important;position:absolute!important;top:0!important;left:0!important;transition:width .5s!important;width:'+pct+'%!important;margin:0!important;padding:0!important');
+}
+
+function nqSetLoadBar(pct){
+  var el=nqEl('nqLbar');
+  if(el) el.setAttribute('style','height:28px!important;min-height:28px!important;background:#FAC515!important;border-radius:8px!important;display:block!important;position:absolute!important;top:0!important;left:0!important;transition:width .8s!important;width:'+pct+'%!important;margin:0!important;padding:0!important');
+}
+
+nqEl('nqStart').onclick=function(){nqNav('nqQ1')};
+nqEl('nqBack').onclick=nqGoBack;
+nqEl('nqGcb').onclick=function(){var c=NQMC[NQC];if(!c)return;nqSaveMulti();nqNav(c.n)};
+
+nqRoot.querySelectorAll('.nq-single .nq-opt').forEach(function(b){
+  b.onclick=function(){
+    b.closest('.nq-opts').querySelectorAll('.nq-opt').forEach(function(x){x.classList.remove('nq-sel')});
+    b.classList.add('nq-sel');
+    var step=b.closest('.nq-scr').id;
+    NQ[step]=b.getAttribute('data-v');
+    var idx=NQF.indexOf(step);
+    if(idx>=0&&idx<NQF.length-1)setTimeout(function(){nqNav(NQF[idx+1])},350);
+  };
+});
+
+nqRoot.querySelectorAll('.nq-multi .nq-opt').forEach(function(b){
+  b.onclick=function(){
+    var ex=b.getAttribute('data-ex')==='1',p=b.closest('.nq-opts');
+    if(ex){p.querySelectorAll('.nq-opt').forEach(function(x){if(x!==b)x.classList.remove('nq-sel')});b.classList.toggle('nq-sel')}
+    else{p.querySelectorAll('.nq-opt[data-ex="1"]').forEach(function(x){x.classList.remove('nq-sel')});b.classList.toggle('nq-sel')}
+    nqEl('nqGcb').disabled=!p.querySelector('.nq-opt.nq-sel');
+    nqSaveMulti();
+  };
+});
+
+function nqSaveMulti(){var step=nqRoot.querySelector('.nq-scr.nq-active');if(!step)return;NQ[step.id]=Array.from(step.querySelectorAll('.nq-opt.nq-sel')).map(function(b){return b.getAttribute('data-v')})}
+
+window.nqNav=function(id){
+  NQH.push(NQC);
+  var cur=nqRoot.querySelector('.nq-scr.nq-active');
+  if(cur){cur.classList.remove('nq-active');cur.style.paddingBottom=''}
+  var nx=nqEl(id);if(!nx)return;
+  nx.classList.add('nq-active');NQC=id;
+  nqSetProgress(nqPct(id));
+  nqUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  // ── TRACKING ──
+  var eventType = 'step_view';
+  if(id === 'nqOffer') eventType = 'quiz_complete';
+  nqTracker.trackStep(id, eventType);
+  // ─────────────
+
+  if(id==='nqInsight1'){var e=nqEl('nqIs1');if(e)nqAnim(e,3,'');}
+  if(id==='nqInsight2'){var e2=nqEl('nqIs2');if(e2)nqAnim(e2,1000,'x');}
+  if(id==='nqInsight4'){var e4=nqEl('nqIs4');if(e4)nqAnim(e4,97,'%');}
+  if(id==='nqLoading')nqRunLoad();
+  if(id==='nqResults')nqUpdateResults();
+};
+
+function nqGoBack(){
+  if(!NQH.length)return;var p=NQH.pop();
+  var cur=nqRoot.querySelector('.nq-scr.nq-active');if(cur){cur.classList.remove('nq-active');cur.style.paddingBottom=''}
+  var el=nqEl(p);if(el){el.classList.add('nq-active');NQC=p}
+  nqSetProgress(nqPct(NQC));nqUI();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nqUI(){
+  var bar=nqEl('nqBar'),btn=nqEl('nqGcb'),mc=NQMC[NQC],act=nqRoot.querySelector('.nq-scr.nq-active');
+  if(mc){
+    bar.setAttribute('style','position:fixed!important;bottom:0!important;left:0!important;right:0!important;padding:16px 20px!important;background:#FFF!important;z-index:9999!important;border-top:1px solid rgba(113,59,18,.1)!important;display:block!important');
+    var sel=act?act.querySelectorAll('.nq-opt.nq-sel'):[];
+    btn.disabled=sel.length===0;
+    if(act)act.style.setProperty('padding-bottom','100px','important');
+  } else {
+    bar.setAttribute('style','display:none!important');
+    if(act)act.style.setProperty('padding-bottom','0','important');
+  }
+  var bk=nqEl('nqBack');
+  if(NQNB.indexOf(NQC)!==-1){
+    bk.setAttribute('style','display:none!important');
+  } else {
+    bk.setAttribute('style','display:flex!important;align-items:center!important;justify-content:center!important;width:44px!important;height:44px!important;min-width:44px!important;border:none!important;background:none!important;cursor:pointer!important;border-radius:4px!important;padding:0!important;margin:0!important;font-size:24px!important;color:#854A0E!important');
+  }
+}
+
+function nqAnim(el,target,suffix){
+  if(!el)return;var dur=1500,st=null;
+  function ease(t){return t===1?1:1-Math.pow(2,-10*t)}
+  function fr(ts){if(!st)st=ts;var p=Math.min((ts-st)/dur,1),v=Math.round(ease(p)*target);el.textContent=(target>=1000?v.toLocaleString():v)+suffix;if(p<1)requestAnimationFrame(fr)}
+  el.textContent='0';setTimeout(function(){requestAnimationFrame(fr)},200);
+}
+
+function nqRunLoad(){
+  var pctEl=nqEl('nqLpct');
+  var steps=[{id:'nqLs1',p:20},{id:'nqLs2',p:40},{id:'nqLs3',p:60},{id:'nqLs4',p:80},{id:'nqLs5',p:100}];
+  var i=0;nqEl(steps[0].id).classList.add('nq-lstep-active');
+  var iv=setInterval(function(){
+    if(i<steps.length){nqSetLoadBar(steps[i].p);if(pctEl)pctEl.textContent=steps[i].p+'%';var el=nqEl(steps[i].id);if(el){el.classList.remove('nq-lstep-active');el.classList.add('nq-lstep-done')}i++;if(i<steps.length){var n=nqEl(steps[i].id);if(n)n.classList.add('nq-lstep-active')}}
+    else{clearInterval(iv);setTimeout(function(){nqNav('nqResults')},600)}
+  },900);
+}
+
+function nqUpdateResults(){
+  var pos={low:8,normal:30,elevated:58,high:88};
+  var bdg={low:'LOW',normal:'NORMAL',elevated:'ELEVATED',high:'HIGH LEVEL'};
+  var q1=NQ.nqQ1||'mixed',q2=NQ.nqQ2||'constant';
+  var bt='Mixed anaerobic';
+  if(q1==='ammonia')bt='Prevotella-dominant';else if(q1==='fishy')bt='Gardnerella-dominant';else if(q1==='musty')bt='Mixed anaerobic';else{if(q2==='urination')bt='Prevotella-dominant';else if(q2==='sexual'||q2==='period')bt='Gardnerella-dominant'}
+  var el=nqEl('nqBtText');
+  if(el){el.textContent=bt;el.setAttribute('style','font-size:22px!important;font-weight:900!important;color:#9B083E!important;margin:0!important;padding:0!important')}
+
+  var q3=NQ.nqQ3||'untried',q4=NQ.nqQ4||'zero',bs=0;
+  if(q3==='2-5days')bs+=40;else if(q3==='1week')bs+=20;else if(q3==='none')bs+=50;
+  if(q4==='3plus')bs+=40;else if(q4==='1-2')bs+=15;
+  var bl='low';if(bs>=61)bl='high';else if(bs>=31)bl='elevated';else if(bs>=10)bl='normal';
+  nqSetMeter('nqM2',bl,pos,bdg);
+
+  var q5=NQ.nqQ5||'clear',pl='elevated';if(q5==='gray')pl='high';else if(q5==='brown'||q5==='yellow')pl='elevated';
+  nqSetMeter('nqM3',pl,pos,bdg);
+
+  var q7=NQ.nqQ7||'under35',q8=NQ.nqQ8||[],q9=NQ.nqQ9||'never',gi=0;
+  if(q7==='35-45')gi=1;else if(q7==='45-55')gi=2;else if(q7==='55plus')gi=3;
+  if(Array.isArray(q8)&&!q8.includes('none'))gi=Math.min(gi+q8.length,3);
+  if(q9==='no-improvement')gi=Math.min(gi+1,3);
+  nqSetMeter('nqM4',['low','normal','elevated','high'][gi],pos,bdg);
+
+  var q11=NQ.nqQ11||'less6mo',il='normal';
+  if(bl==='high'&&(q11==='1-3yr'||q11==='3plus'))il='high';else if(bl==='high'||q11==='1-3yr'||q11==='3plus')il='elevated';else if(bl==='elevated'||q11==='6mo-1yr')il='elevated';
+  nqSetMeter('nqM5',il,pos,bdg);
+
+  var hl='normal';
+  if(Array.isArray(q8)&&!q8.includes('none')){if(q8.length>=3)hl='high';else if(q8.length>=1)hl='elevated'}
+  if(q7==='45-55'||q7==='55plus'){if(hl==='normal')hl='elevated';else if(hl==='elevated')hl='high'}
+  nqSetMeter('nqM6',hl,pos,bdg);
+}
+
+function nqSetMeter(pre,lvl,pos,bdg){
+  var t=nqEl(pre+'t'),b=nqEl(pre+'b');
+  if(t) t.setAttribute('style','position:absolute!important;top:50%!important;transform:translate(-50%,-50%)!important;width:20px!important;height:20px!important;background:#FFF!important;border:3px solid #542C0D!important;border-radius:50%!important;box-shadow:0 1px 4px rgba(0,0,0,.15)!important;transition:left .8s!important;left:'+pos[lvl]+'%!important;margin:0!important;padding:0!important');
+  if(b){
+    b.textContent=bdg[lvl];
+    var colors={high:'background:#FDF0F4!important;color:#9B083E!important',elevated:'background:#FEF7C3!important;color:#CA8504!important',normal:'background:#F0FDF4!important;color:#276536!important',low:'background:#F0FDF4!important;color:#276536!important'};
+    b.setAttribute('style','font-size:11px!important;font-weight:800!important;padding:4px 12px!important;border-radius:4px!important;text-transform:uppercase!important;letter-spacing:.5px!important;display:inline-block!important;line-height:1.4!important;margin:0!important;'+colors[lvl]);
+  }
+}
+})();
+</script>
